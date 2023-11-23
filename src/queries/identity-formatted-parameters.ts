@@ -1,5 +1,4 @@
 import { extendType, intArg, nonNull, stringArg } from "nexus";
-import moment from "moment";
 import { isRulesApplied } from "../helpers";
 
 const IdentityFormattedParametersQuery = extendType({

@@ -1,5 +1,4 @@
 import { extendType, intArg, nonNull } from "nexus";
-import moment from "moment";
 import { getUserId } from "../utils";
 import { isRulesApplied } from "../helpers";
 

@@ -1,4 +1,4 @@
-import { makeSchema, objectType, scalarType } from "nexus";
+import { makeSchema } from "nexus";
 import path from "path";
 import { applyMiddleware } from "graphql-middleware";
 import permissions from "./permissions";

@@ -1,6 +1,5 @@
-import { ApolloServer, BaseContext } from "@apollo/server";
+import { ApolloServer } from "@apollo/server";
 import {
-  StandaloneServerContextFunctionArgument,
   startStandaloneServer,
 } from "@apollo/server/standalone";
 import schema from "./schema";

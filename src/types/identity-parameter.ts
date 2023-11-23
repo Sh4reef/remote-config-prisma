@@ -1,5 +1,8 @@
 import { objectType } from "nexus";
 
+/**
+ * IdentityParameter type
+ */
 const IdentityParameter = objectType({
   name: "IdentityParameter",
   definition(t) {

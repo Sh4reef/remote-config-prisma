@@ -1,7 +1,6 @@
 import { verify } from "jsonwebtoken";
 import { Context } from "./context";
 import { User } from "@prisma/client";
-import { GraphQLError } from "graphql";
 
 export const getUserId = ({ req }: Context) => {
   const authorization = req.headers["authorization"];
