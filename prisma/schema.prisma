@@ -1,0 +1,137 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       Int       @id @default(autoincrement())
+  name     String?
+  email    String    @unique
+  hash     String
+  projects Project[]
+}
+
+model Project {
+  id   Int    @id @default(autoincrement())
+  name String @unique
+
+  user       User        @relation(fields: [userId], references: [id])
+  userId     Int
+  parameters Parameter[]
+  condtions  Condition[]
+  identities Identity[]
+}
+
+model Identity {
+  id       Int           @id @default(autoincrement())
+  identity String
+  platform PlatformEnum?
+  language LanguageEnum?
+  country  CountryEnum?
+
+  project    Project             @relation(fields: [projectId], references: [id])
+  projectId  Int
+  parameters IdentityParameter[]
+}
+
+model IdentityParameter {
+  id                        Int      @id @default(autoincrement())
+  isOverwritten             Boolean  @default(false)
+  overwritten_string_value  String?
+  overwritten_integer_value Int?
+  overwritten_boolean_value Boolean?
+  overwritten_json_value    String?
+
+  identity    Identity  @relation(fields: [identityId], references: [id])
+  identityId  Int
+  parameter   Parameter @relation(fields: [parameterId], references: [id])
+  parameterId Int
+}
+
+model Parameter {
+  id            Int           @id @default(autoincrement())
+  parameter     String        @unique
+  value_type    ValueTypeEnum
+  string_value  String?
+  integer_value Int?
+  boolean_value Boolean?
+  json_value    String?
+
+  project         Project             @relation(fields: [projectId], references: [id])
+  projectId       Int
+  conditionValues ConditionValue[]
+  identities      IdentityParameter[]
+}
+
+model Condition {
+  id   Int    @id @default(autoincrement())
+  name String
+
+  project         Project          @relation(fields: [projectId], references: [id])
+  projectId       Int
+  conditionValues ConditionValue[]
+  rules           Rule[]
+}
+
+model Rule {
+  id              Int           @id @default(autoincrement())
+  rule            RuleEnum
+  datetime        String?
+  platform        PlatformEnum?
+  language        LanguageEnum?
+  country         CountryEnum?
+  before_datetime Boolean?
+
+  condition   Condition @relation(fields: [conditionId], references: [id])
+  conditionId Int
+}
+
+model ConditionValue {
+  id            Int      @id @default(autoincrement())
+  string_value  String?
+  integer_value Int?
+  boolean_value Boolean?
+  json_value    String?
+
+  parameter   Parameter @relation(fields: [parameterId], references: [id])
+  parameterId Int
+  condition   Condition @relation(fields: [conditionId], references: [id])
+  conditionId Int
+}
+
+enum ValueTypeEnum {
+  string
+  integer
+  boolean
+  json
+}
+
+enum RuleEnum {
+  datetime
+  platform
+  language
+  country
+}
+
+enum PlatformEnum {
+  web
+  ios
+  android
+}
+
+enum LanguageEnum {
+  arabic
+  english
+}
+
+enum CountryEnum {
+  saudi_arabia
+  united_states
+}

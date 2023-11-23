@@ -1,0 +1,18 @@
+import { inputObjectType } from "nexus";
+
+/**
+ * Identity input type
+ */
+const IdentityInputType = inputObjectType({
+  name: "IdentityInputType",
+  definition(t) {
+    t.int("id");
+    t.nonNull.string("identity");
+    t.field("platform", { type: "PlatformEnum" });
+    t.field("language", { type: "LanguageEnum" });
+    t.field("country", { type: "CountryEnum" });
+    t.list.field("parameters", { type: "IdentityParameterInputType" });
+  },
+});
+
+export default IdentityInputType;
