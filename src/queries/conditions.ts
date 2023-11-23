@@ -1,7 +1,7 @@
 import { extendType, intArg, nonNull } from "nexus";
 import { getUserId } from "../utils";
 
-const Conditions = extendType({
+const ConditionsQuery = extendType({
   type: "Query",
   definition(t) {
     t.list.field("conditions", {
@@ -24,4 +24,4 @@ const Conditions = extendType({
   },
 });
 
-export default Conditions;
+export default ConditionsQuery;

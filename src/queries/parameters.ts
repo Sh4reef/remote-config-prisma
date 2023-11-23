@@ -1,7 +1,7 @@
 import { extendType, intArg, nonNull } from "nexus";
 import { getUserId } from "../utils";
 
-const Parameters = extendType({
+const ParametersQuery = extendType({
   type: "Query",
   definition(t) {
     t.list.field("parameters", {
@@ -19,4 +19,4 @@ const Parameters = extendType({
   },
 });
 
-export default Parameters;
+export default ParametersQuery;

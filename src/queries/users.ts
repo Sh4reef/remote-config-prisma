@@ -1,6 +1,6 @@
 import { extendType } from "nexus";
 
-const Users = extendType({
+const UsersQuery = extendType({
   type: "Query",
   definition(t) {
     t.list.field("users", {
@@ -12,4 +12,4 @@ const Users = extendType({
   },
 });
 
-export default Users;
+export default UsersQuery;

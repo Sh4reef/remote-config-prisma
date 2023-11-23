@@ -1,9 +1,5 @@
-import { allow, deny, rule, shield } from "graphql-shield";
-import { ApolloServerErrorCode } from "@apollo/server/errors";
+import { rule, shield } from "graphql-shield";
 import { Context } from "./context";
-import { JwtPayload, verify } from "jsonwebtoken";
-import { User } from "@prisma/client";
-import { applyMiddleware } from "graphql-middleware";
 import { getUserId } from "./utils";
 
 const rules = {

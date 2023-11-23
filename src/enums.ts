@@ -16,7 +16,7 @@ export const RuleEnum = enumType({
  * value enum
  */
 export const ValueTypeEnum = enumType({
-  name: "ValueEnum",
+  name: "ValueTypeEnum",
   members: ["string", "integer", "boolean", "json"],
 });
 

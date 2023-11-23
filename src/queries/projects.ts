@@ -1,7 +1,7 @@
 import { extendType } from "nexus";
 import { getUserId } from "../utils";
 
-const Projects = extendType({
+const ProjectsQuery = extendType({
   type: "Query",
   definition(t) {
     t.list.field("projects", {
@@ -14,4 +14,4 @@ const Projects = extendType({
   },
 });
 
-export default Projects;
+export default ProjectsQuery;

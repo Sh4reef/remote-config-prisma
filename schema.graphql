@@ -66,6 +66,7 @@ input IdentityInputType {
 
 type IdentityParameter {
   id: Int!
+  identityId: Int
   isOverwritten: Boolean!
   overwritten_boolean_value: Boolean
   overwritten_integer_value: Int
@@ -78,6 +79,10 @@ type IdentityParameter {
 input IdentityParameterInputType {
   identityId: Int
   isOverwritten: Boolean
+  overwritten_boolean_value: Boolean
+  overwritten_integer_value: Int
+  overwritten_json_value: Json
+  overwritten_string_value: String
   parameter: ParameterInputType
 }
 
@@ -96,7 +101,11 @@ type Mutation {
   createProject(name: String!): Project
   deleteCondition(conditionId: Int!, projectId: Int!): Condition
   deleteParameter(parameterId: Int!, projectId: Int!): Parameter
+  login(email: String!, password: String!): AuthPayload
+  resetIdentityParameter(identityParameterId: Int!): IdentityParameter
+  signup(email: String!, name: String!, password: String!): AuthPayload
   updateCondition(conditionId: Int!, data: ConditionInputType!, projectId: Int!): Condition
+  updateIdentityParameter(data: IdentityParameterInputType!, identityParameterId: Int!): IdentityParameter
   updateParameter(data: ParameterInputType!, parameterId: Int!, projectId: Int!): Parameter
 }
 
@@ -109,7 +118,7 @@ type Parameter {
   parameter: String!
   projectId: Int!
   string_value: String
-  value_type: ValueEnum!
+  value_type: ValueTypeEnum!
 }
 
 input ParameterInputType {
@@ -119,7 +128,7 @@ input ParameterInputType {
   json_value: String
   parameter: String!
   string_value: String
-  value_type: ValueEnum!
+  value_type: ValueTypeEnum!
 }
 
 enum PlatformEnum {
@@ -136,7 +145,9 @@ type Project {
 
 type Query {
   conditions(projectId: Int!): [Condition]
+  formattedParameters(projectId: Int!): FormattedParameters
   identities(projectId: Int!): [Identity]
+  identityFormattedParameters(identity: String!, projectId: Int!): FormattedParameters
   parameters(projectId: Int!): [Parameter]
   projects: [Project]
   users: [User]
@@ -177,7 +188,7 @@ type User {
   projects: [Project]
 }
 
-enum ValueEnum {
+enum ValueTypeEnum {
   boolean
   integer
   json

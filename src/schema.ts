@@ -14,11 +14,11 @@ import RuleInputType from "./inputs/rule-input";
 import ConditionInputType from "./inputs/condition-input";
 import ParameterInputType from "./inputs/parameter-input";
 import Parameter from "./types/parameter";
-import Users from "./queries/users";
-import Projects from "./queries/projects";
-import Identities from "./queries/identities";
-import Parameters from "./queries/parameters";
-import Conditions from "./queries/conditions";
+import UsersQuery from "./queries/users";
+import ProjectsQuery from "./queries/projects";
+import IdentitiesQuery from "./queries/identities";
+import ParametersQuery from "./queries/parameters";
+import ConditionsQuery from "./queries/conditions";
 import CreateConditionMutation from "./mutations/create-condition";
 import CreateIdentityMutation from "./mutations/create-identity";
 import IdentityInputType from "./inputs/identity-input";
@@ -38,15 +38,23 @@ import FormattedParameters from "./types/formatted-parameters";
 import JsonScalar from "./scalars/json";
 import IdentityParameter from "./types/identity-parameter";
 import IdentityParameterInputType from "./inputs/identity-parameter-input";
+import LoginMutation from "./mutations/login";
+import SignupMutation from "./mutations/signup";
+import IdentityFormattedParametersQuery from "./queries/identity-formatted-parameters";
+import FormattedParametersQuery from "./queries/formatted-parameters";
+import UpdateIdentityParameterMutation from "./mutations/update-identity-parameter";
+import ResetIdentityParameterMutation from "./mutations/reset-identity-parameter";
 
 const schema = makeSchema({
   types: [
     // queries
-    Users,
-    Projects,
-    Identities,
-    Parameters,
-    Conditions,
+    UsersQuery,
+    ProjectsQuery,
+    IdentitiesQuery,
+    ParametersQuery,
+    ConditionsQuery,
+    FormattedParametersQuery,
+    IdentityFormattedParametersQuery,
 
     // types
     User,
@@ -61,6 +69,8 @@ const schema = makeSchema({
     FormattedParameters,
 
     // // mutations
+    SignupMutation,
+    LoginMutation,
     CreateProjectMutation,
     CreateIdentityMutation,
     CreateParameterMutation,
@@ -69,6 +79,8 @@ const schema = makeSchema({
     CreateConditionMutation,
     UpdateConditionMutation,
     DeleteConditionMutation,
+    UpdateIdentityParameterMutation,
+    ResetIdentityParameterMutation,
 
     // scalar types
     JsonScalar,

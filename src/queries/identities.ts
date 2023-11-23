@@ -1,6 +1,6 @@
 import { extendType, intArg, nonNull } from "nexus";
 
-const Identities = extendType({
+const IdentitiesQuery = extendType({
   type: "Query",
   definition(t) {
     t.list.field("identities", {
@@ -17,4 +17,4 @@ const Identities = extendType({
   },
 });
 
-export default Identities;
+export default IdentitiesQuery;

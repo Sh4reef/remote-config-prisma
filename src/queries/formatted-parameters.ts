@@ -1,8 +1,9 @@
 import { extendType, intArg, nonNull } from "nexus";
 import moment from "moment";
 import { getUserId } from "../utils";
+import { isRulesApplied } from "../helpers";
 
-const FormattedParameters = extendType({
+const FormattedParametersQuery = extendType({
   type: "Query",
   definition(t) {
     t.field("formattedParameters", {
@@ -28,49 +29,34 @@ const FormattedParameters = extendType({
           },
         });
 
-        const formattedParams = parameters.reduce(
+        const formattedParameters = parameters.reduce(
           (prevParameters, parameter) => {
             const valueType = parameter["value_type"];
-            const value = parameter[`${valueType}_value`];
             const conditionValues = parameter["conditionValues"];
-
-            let formattedParameter;
+            let value = parameter[`${valueType}_value`];
 
             conditionValues.forEach((conditionValue) => {
               const conditionalValue = conditionValue[`${valueType}_value`];
               const rules = conditionValue["condition"]["rules"];
-              const rulesApplied = rules.every((rule) => {
-                const ruleType = rule["rule"];
-                const ruleValue = rule[ruleType];
+              const rulesApplied = isRulesApplied(rules);
 
-                // datetime logic
-                if (ruleType === "datetime") {
-                  var isBefore = rule["before_datetime"];
-                  if (isBefore) {
-                    return moment().isBefore(ruleValue);
-                  } else {
-                    return moment().isAfter(ruleValue);
-                  }
-                }
-              });
-
-              formattedParameter = rulesApplied ? conditionalValue : value;
+              value = rulesApplied ? conditionalValue : value;
             });
 
             return {
               ...prevParameters,
-              [`${parameter.parameter}`]: formattedParameter,
+              [parameter.parameter]: value,
             };
           },
           {}
         );
 
         return {
-          parameters: formattedParams,
+          parameters: formattedParameters,
         };
       },
     });
   },
 });
 
-export default FormattedParameters;
+export default FormattedParametersQuery;

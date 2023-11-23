@@ -1,5 +1,4 @@
 import { objectType } from "nexus";
-import { ValueTypeEnum } from "../enums";
 
 /**
  * Parameter type
@@ -9,7 +8,7 @@ const Parameter = objectType({
   definition(t) {
     t.nonNull.int("id");
     t.nonNull.string("parameter");
-    t.nonNull.field("value_type", { type: ValueTypeEnum });
+    t.nonNull.field("value_type", { type: "ValueTypeEnum" });
     t.string("string_value");
     t.int("integer_value");
     t.boolean("boolean_value");
