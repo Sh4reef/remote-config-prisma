@@ -47,7 +47,7 @@ model IdentityParameter {
   overwritten_string_value  String?
   overwritten_integer_value Int?
   overwritten_boolean_value Boolean?
-  overwritten_json_value    String?
+  overwritten_json_value    Json?
 
   identity    Identity  @relation(fields: [identityId], references: [id])
   identityId  Int
@@ -62,7 +62,7 @@ model Parameter {
   string_value  String?
   integer_value Int?
   boolean_value Boolean?
-  json_value    String?
+  json_value    Json?
 
   project         Project             @relation(fields: [projectId], references: [id])
   projectId       Int
@@ -98,7 +98,7 @@ model ConditionValue {
   string_value  String?
   integer_value Int?
   boolean_value Boolean?
-  json_value    String?
+  json_value    Json?
 
   parameter   Parameter @relation(fields: [parameterId], references: [id])
   parameterId Int

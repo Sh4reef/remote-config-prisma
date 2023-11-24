@@ -1,4 +1,4 @@
-import { makeSchema } from "nexus";
+import { asNexusMethod, makeSchema } from "nexus";
 import path from "path";
 import { applyMiddleware } from "graphql-middleware";
 import permissions from "./permissions";
@@ -35,7 +35,6 @@ import Project from "./types/project";
 import Identity from "./types/identity";
 import Condition from "./types/condition";
 import FormattedParameters from "./types/formatted-parameters";
-import JsonScalar from "./scalars/json";
 import IdentityParameter from "./types/identity-parameter";
 import IdentityParameterInputType from "./inputs/identity-parameter-input";
 import LoginMutation from "./mutations/login";
@@ -44,6 +43,11 @@ import IdentityFormattedParametersQuery from "./queries/identity-formatted-param
 import FormattedParametersQuery from "./queries/formatted-parameters";
 import UpdateIdentityParameterMutation from "./mutations/update-identity-parameter";
 import ResetIdentityParameterMutation from "./mutations/reset-identity-parameter";
+import {
+  GraphQLDateTimeISO,
+  GraphQLJSON,
+  GraphQLJSONObject,
+} from "graphql-scalars";
 
 const schema = makeSchema({
   types: [
@@ -83,7 +87,9 @@ const schema = makeSchema({
     ResetIdentityParameterMutation,
 
     // scalar types
-    JsonScalar,
+    asNexusMethod(GraphQLDateTimeISO, "datetime"),
+    asNexusMethod(GraphQLJSON, "json"),
+    asNexusMethod(GraphQLJSONObject, "jsonObject"),
 
     // // input types
     IdentityInputType,
@@ -99,12 +105,13 @@ const schema = makeSchema({
     CountryEnum,
     RuleEnum,
   ],
+  shouldGenerateArtifacts: process.env.NODE_ENV === "development",
   outputs: {
-    schema: path.join(__dirname, "/../schema.graphql"),
-    typegen: path.join(__dirname, "/../generated/nexus.ts"),
+    schema: path.join(__dirname, "..", "schema.graphql"),
+    typegen: path.join(__dirname, "..", "generated", "nexus.ts"),
   },
   contextType: {
-    module: path.join(__dirname, "context.ts"),
+    module: require.resolve("./context"),
     export: "Context",
   },
 });

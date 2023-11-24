@@ -10,7 +10,7 @@ const ConditionValue = objectType({
     t.string("string_value");
     t.int("integer_value");
     t.boolean("boolean_value");
-    t.string("json_value");
+    t.jsonObject("json_value");
     t.nonNull.int("conditionId");
     t.nonNull.int("parameterId");
     t.field("condition", {

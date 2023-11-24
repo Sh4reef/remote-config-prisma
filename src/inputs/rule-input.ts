@@ -11,7 +11,7 @@ const RuleInputType = inputObjectType({
     t.field("language", { type: "LanguageEnum" });
     t.field("platform", { type: "PlatformEnum" });
     t.field("country", { type: "CountryEnum" });
-    t.string("datetime");
+    t.datetime("datetime");
     t.boolean("before_datetime");
   },
 });

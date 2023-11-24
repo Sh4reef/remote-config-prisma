@@ -12,7 +12,7 @@ const Parameter = objectType({
     t.string("string_value");
     t.int("integer_value");
     t.boolean("boolean_value");
-    t.string("json_value");
+    t.jsonObject("json_value");
     t.nonNull.int("projectId");
     t.nonNull.list.field("conditionValues", {
       type: "ConditionValue",

@@ -12,7 +12,7 @@ const IdentityParameter = objectType({
     t.string("overwritten_string_value");
     t.int("overwritten_integer_value");
     t.boolean("overwritten_boolean_value");
-    t.string("overwritten_json_value");
+    t.jsonObject("overwritten_json_value");
     t.nonNull.int("parameterId");
     t.field("parameter", {
       type: "Parameter",

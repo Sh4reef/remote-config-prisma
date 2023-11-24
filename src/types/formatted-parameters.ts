@@ -6,7 +6,7 @@ import { objectType } from "nexus";
 const FormattedParameters = objectType({
   name: "FormattedParameters",
   definition(t) {
-    t.json("parameters");
+    t.jsonObject("parameters");
   },
 });
 

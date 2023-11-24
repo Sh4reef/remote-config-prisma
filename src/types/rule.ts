@@ -13,7 +13,7 @@ const Rule = objectType({
     t.field("platform", { type: "PlatformEnum" });
     t.field("country", { type: "CountryEnum" });
     t.string("country");
-    t.string("datetime");
+    t.datetime("datetime");
     t.boolean("before_datetime");
   },
 });
