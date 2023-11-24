@@ -17,8 +17,7 @@ const ResetIdentityParameterMutation = extendType({
             isOverwritten: false,
             overwritten_string_value: null,
             overwritten_integer_value: null,
-            overwritten_boolean_value: null,
-            overwritten_json_value: null,
+            overwritten_boolean_value: null
           },
         });
       },
