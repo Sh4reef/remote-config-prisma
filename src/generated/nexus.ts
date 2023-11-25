@@ -47,7 +47,7 @@ declare global {
 export interface NexusGenInputs {
   ConditionInputType: { // input type
     boolean_value?: boolean | null; // Boolean
-    id?: number | null; // Int
+    id?: string | null; // String
     integer_value?: number | null; // Int
     json_value?: NexusGenScalars['JSONObject'] | null; // JSONObject
     name: string; // String!
@@ -56,14 +56,13 @@ export interface NexusGenInputs {
   }
   IdentityInputType: { // input type
     country?: NexusGenEnums['CountryEnum'] | null; // CountryEnum
-    id?: number | null; // Int
     identity: string; // String!
     language?: NexusGenEnums['LanguageEnum'] | null; // LanguageEnum
     parameters?: Array<NexusGenInputs['IdentityParameterInputType'] | null> | null; // [IdentityParameterInputType]
     platform?: NexusGenEnums['PlatformEnum'] | null; // PlatformEnum
   }
   IdentityParameterInputType: { // input type
-    identityId?: number | null; // Int
+    identityId?: string | null; // String
     isOverwritten?: boolean | null; // Boolean
     overwritten_boolean_value?: boolean | null; // Boolean
     overwritten_integer_value?: number | null; // Int
@@ -84,7 +83,7 @@ export interface NexusGenInputs {
     before_datetime?: boolean | null; // Boolean
     country?: NexusGenEnums['CountryEnum'] | null; // CountryEnum
     datetime?: NexusGenScalars['DateTimeISO'] | null; // DateTimeISO
-    id?: number | null; // Int
+    id?: string | null; // String
     language?: NexusGenEnums['LanguageEnum'] | null; // LanguageEnum
     platform?: NexusGenEnums['PlatformEnum'] | null; // PlatformEnum
     rule: NexusGenEnums['RuleEnum']; // RuleEnum!
@@ -111,22 +110,27 @@ export interface NexusGenScalars {
 }
 
 export interface NexusGenObjects {
+  ApiKey: { // root type
+    id: string; // String!
+    name: string; // String!
+    secret: string; // String!
+  }
   AuthPayload: { // root type
     token?: string | null; // String
     user?: NexusGenRootTypes['User'] | null; // User
   }
   Condition: { // root type
-    id: number; // Int!
+    id: string; // String!
     name: string; // String!
-    projectId: number; // Int!
+    projectId: string; // String!
   }
   ConditionValue: { // root type
     boolean_value?: boolean | null; // Boolean
-    conditionId: number; // Int!
-    id: number; // Int!
+    conditionId: string; // String!
+    id: string; // String!
     integer_value?: number | null; // Int
     json_value?: NexusGenScalars['JSONObject'] | null; // JSONObject
-    parameterId: number; // Int!
+    parameterId: string; // String!
     string_value?: string | null; // String
   }
   FormattedParameters: { // root type
@@ -134,51 +138,51 @@ export interface NexusGenObjects {
   }
   Identity: { // root type
     country?: NexusGenEnums['CountryEnum'] | null; // CountryEnum
-    id: number; // Int!
+    id: string; // String!
     identity: string; // String!
     language?: NexusGenEnums['LanguageEnum'] | null; // LanguageEnum
     platform?: NexusGenEnums['PlatformEnum'] | null; // PlatformEnum
-    projectId: number; // Int!
+    projectId: string; // String!
   }
   IdentityParameter: { // root type
-    id: number; // Int!
-    identityId?: number | null; // Int
+    id: string; // String!
+    identityId?: string | null; // String
     isOverwritten: boolean; // Boolean!
     overwritten_boolean_value?: boolean | null; // Boolean
     overwritten_integer_value?: number | null; // Int
     overwritten_json_value?: NexusGenScalars['JSONObject'] | null; // JSONObject
     overwritten_string_value?: string | null; // String
-    parameterId: number; // Int!
+    parameterId: string; // String!
   }
   Mutation: {};
   Parameter: { // root type
     boolean_value?: boolean | null; // Boolean
-    id: number; // Int!
+    id: string; // String!
     integer_value?: number | null; // Int
     json_value?: NexusGenScalars['JSONObject'] | null; // JSONObject
     parameter: string; // String!
-    projectId: number; // Int!
+    projectId: string; // String!
     string_value?: string | null; // String
     value_type: NexusGenEnums['ValueTypeEnum']; // ValueTypeEnum!
   }
   Project: { // root type
-    id: number; // Int!
+    id: string; // String!
     name: string; // String!
   }
   Query: {};
   Rule: { // root type
     before_datetime?: boolean | null; // Boolean
-    conditionId: number; // Int!
+    conditionId: string; // String!
     country?: string | null; // String
     datetime?: NexusGenScalars['DateTimeISO'] | null; // DateTimeISO
-    id: number; // Int!
+    id: string; // String!
     language?: NexusGenEnums['LanguageEnum'] | null; // LanguageEnum
     platform?: NexusGenEnums['PlatformEnum'] | null; // PlatformEnum
     rule: NexusGenEnums['RuleEnum']; // RuleEnum!
   }
   User: { // root type
     email?: string | null; // String
-    id: number; // Int!
+    id: string; // String!
     name?: string | null; // String
   }
 }
@@ -194,24 +198,29 @@ export type NexusGenRootTypes = NexusGenObjects
 export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars & NexusGenEnums
 
 export interface NexusGenFieldTypes {
+  ApiKey: { // field return type
+    id: string; // String!
+    name: string; // String!
+    secret: string; // String!
+  }
   AuthPayload: { // field return type
     token: string | null; // String
     user: NexusGenRootTypes['User'] | null; // User
   }
   Condition: { // field return type
-    id: number; // Int!
+    id: string; // String!
     name: string; // String!
-    projectId: number; // Int!
+    projectId: string; // String!
     rules: Array<NexusGenRootTypes['Rule'] | null>; // [Rule]!
   }
   ConditionValue: { // field return type
     boolean_value: boolean | null; // Boolean
     condition: NexusGenRootTypes['Condition'] | null; // Condition
-    conditionId: number; // Int!
-    id: number; // Int!
+    conditionId: string; // String!
+    id: string; // String!
     integer_value: number | null; // Int
     json_value: NexusGenScalars['JSONObject'] | null; // JSONObject
-    parameterId: number; // Int!
+    parameterId: string; // String!
     string_value: string | null; // String
   }
   FormattedParameters: { // field return type
@@ -219,26 +228,27 @@ export interface NexusGenFieldTypes {
   }
   Identity: { // field return type
     country: NexusGenEnums['CountryEnum'] | null; // CountryEnum
-    id: number; // Int!
+    id: string; // String!
     identity: string; // String!
     language: NexusGenEnums['LanguageEnum'] | null; // LanguageEnum
     parameters: Array<NexusGenRootTypes['IdentityParameter'] | null> | null; // [IdentityParameter]
     platform: NexusGenEnums['PlatformEnum'] | null; // PlatformEnum
     project: NexusGenRootTypes['Project'] | null; // Project
-    projectId: number; // Int!
+    projectId: string; // String!
   }
   IdentityParameter: { // field return type
-    id: number; // Int!
-    identityId: number | null; // Int
+    id: string; // String!
+    identityId: string | null; // String
     isOverwritten: boolean; // Boolean!
     overwritten_boolean_value: boolean | null; // Boolean
     overwritten_integer_value: number | null; // Int
     overwritten_json_value: NexusGenScalars['JSONObject'] | null; // JSONObject
     overwritten_string_value: string | null; // String
     parameter: NexusGenRootTypes['Parameter'] | null; // Parameter
-    parameterId: number; // Int!
+    parameterId: string; // String!
   }
   Mutation: { // field return type
+    createApiKey: NexusGenRootTypes['ApiKey'] | null; // ApiKey
     createCondition: NexusGenRootTypes['Condition'] | null; // Condition
     createIdentity: NexusGenRootTypes['Identity'] | null; // Identity
     createParameter: NexusGenRootTypes['Parameter'] | null; // Parameter
@@ -248,6 +258,7 @@ export interface NexusGenFieldTypes {
     deleteParameter: NexusGenRootTypes['Parameter'] | null; // Parameter
     login: NexusGenRootTypes['AuthPayload'] | null; // AuthPayload
     resetIdentityParameter: NexusGenRootTypes['IdentityParameter'] | null; // IdentityParameter
+    revokeApiKey: NexusGenRootTypes['ApiKey'] | null; // ApiKey
     signup: NexusGenRootTypes['AuthPayload'] | null; // AuthPayload
     updateCondition: NexusGenRootTypes['Condition'] | null; // Condition
     updateIdentityParameter: NexusGenRootTypes['IdentityParameter'] | null; // IdentityParameter
@@ -256,20 +267,21 @@ export interface NexusGenFieldTypes {
   Parameter: { // field return type
     boolean_value: boolean | null; // Boolean
     conditionValues: Array<NexusGenRootTypes['ConditionValue'] | null>; // [ConditionValue]!
-    id: number; // Int!
+    id: string; // String!
     integer_value: number | null; // Int
     json_value: NexusGenScalars['JSONObject'] | null; // JSONObject
     parameter: string; // String!
-    projectId: number; // Int!
+    projectId: string; // String!
     string_value: string | null; // String
     value_type: NexusGenEnums['ValueTypeEnum']; // ValueTypeEnum!
   }
   Project: { // field return type
-    id: number; // Int!
+    id: string; // String!
     name: string; // String!
     parameters: Array<NexusGenRootTypes['Parameter'] | null> | null; // [Parameter]
   }
   Query: { // field return type
+    apiKeys: Array<NexusGenRootTypes['ApiKey'] | null> | null; // [ApiKey]
     conditions: Array<NexusGenRootTypes['Condition'] | null> | null; // [Condition]
     formattedParameters: NexusGenRootTypes['FormattedParameters'] | null; // FormattedParameters
     getIdentity: NexusGenRootTypes['Identity'] | null; // Identity
@@ -281,41 +293,46 @@ export interface NexusGenFieldTypes {
   }
   Rule: { // field return type
     before_datetime: boolean | null; // Boolean
-    conditionId: number; // Int!
+    conditionId: string; // String!
     country: string | null; // String
     datetime: NexusGenScalars['DateTimeISO'] | null; // DateTimeISO
-    id: number; // Int!
+    id: string; // String!
     language: NexusGenEnums['LanguageEnum'] | null; // LanguageEnum
     platform: NexusGenEnums['PlatformEnum'] | null; // PlatformEnum
     rule: NexusGenEnums['RuleEnum']; // RuleEnum!
   }
   User: { // field return type
     email: string | null; // String
-    id: number; // Int!
+    id: string; // String!
     name: string | null; // String
     projects: Array<NexusGenRootTypes['Project'] | null> | null; // [Project]
   }
 }
 
 export interface NexusGenFieldTypeNames {
+  ApiKey: { // field return type name
+    id: 'String'
+    name: 'String'
+    secret: 'String'
+  }
   AuthPayload: { // field return type name
     token: 'String'
     user: 'User'
   }
   Condition: { // field return type name
-    id: 'Int'
+    id: 'String'
     name: 'String'
-    projectId: 'Int'
+    projectId: 'String'
     rules: 'Rule'
   }
   ConditionValue: { // field return type name
     boolean_value: 'Boolean'
     condition: 'Condition'
-    conditionId: 'Int'
-    id: 'Int'
+    conditionId: 'String'
+    id: 'String'
     integer_value: 'Int'
     json_value: 'JSONObject'
-    parameterId: 'Int'
+    parameterId: 'String'
     string_value: 'String'
   }
   FormattedParameters: { // field return type name
@@ -323,26 +340,27 @@ export interface NexusGenFieldTypeNames {
   }
   Identity: { // field return type name
     country: 'CountryEnum'
-    id: 'Int'
+    id: 'String'
     identity: 'String'
     language: 'LanguageEnum'
     parameters: 'IdentityParameter'
     platform: 'PlatformEnum'
     project: 'Project'
-    projectId: 'Int'
+    projectId: 'String'
   }
   IdentityParameter: { // field return type name
-    id: 'Int'
-    identityId: 'Int'
+    id: 'String'
+    identityId: 'String'
     isOverwritten: 'Boolean'
     overwritten_boolean_value: 'Boolean'
     overwritten_integer_value: 'Int'
     overwritten_json_value: 'JSONObject'
     overwritten_string_value: 'String'
     parameter: 'Parameter'
-    parameterId: 'Int'
+    parameterId: 'String'
   }
   Mutation: { // field return type name
+    createApiKey: 'ApiKey'
     createCondition: 'Condition'
     createIdentity: 'Identity'
     createParameter: 'Parameter'
@@ -352,6 +370,7 @@ export interface NexusGenFieldTypeNames {
     deleteParameter: 'Parameter'
     login: 'AuthPayload'
     resetIdentityParameter: 'IdentityParameter'
+    revokeApiKey: 'ApiKey'
     signup: 'AuthPayload'
     updateCondition: 'Condition'
     updateIdentityParameter: 'IdentityParameter'
@@ -360,20 +379,21 @@ export interface NexusGenFieldTypeNames {
   Parameter: { // field return type name
     boolean_value: 'Boolean'
     conditionValues: 'ConditionValue'
-    id: 'Int'
+    id: 'String'
     integer_value: 'Int'
     json_value: 'JSONObject'
     parameter: 'String'
-    projectId: 'Int'
+    projectId: 'String'
     string_value: 'String'
     value_type: 'ValueTypeEnum'
   }
   Project: { // field return type name
-    id: 'Int'
+    id: 'String'
     name: 'String'
     parameters: 'Parameter'
   }
   Query: { // field return type name
+    apiKeys: 'ApiKey'
     conditions: 'Condition'
     formattedParameters: 'FormattedParameters'
     getIdentity: 'Identity'
@@ -385,17 +405,17 @@ export interface NexusGenFieldTypeNames {
   }
   Rule: { // field return type name
     before_datetime: 'Boolean'
-    conditionId: 'Int'
+    conditionId: 'String'
     country: 'String'
     datetime: 'DateTimeISO'
-    id: 'Int'
+    id: 'String'
     language: 'LanguageEnum'
     platform: 'PlatformEnum'
     rule: 'RuleEnum'
   }
   User: { // field return type name
     email: 'String'
-    id: 'Int'
+    id: 'String'
     name: 'String'
     projects: 'Project'
   }
@@ -403,38 +423,42 @@ export interface NexusGenFieldTypeNames {
 
 export interface NexusGenArgTypes {
   Mutation: {
+    createApiKey: { // args
+      name: string; // String!
+    }
     createCondition: { // args
       data: NexusGenInputs['ConditionInputType']; // ConditionInputType!
-      projectId: number; // Int!
+      projectId: string; // String!
     }
     createIdentity: { // args
       data: NexusGenInputs['IdentityInputType']; // IdentityInputType!
-      projectId: number; // Int!
+      projectId: string; // String!
     }
     createParameter: { // args
       data: NexusGenInputs['ParameterInputType']; // ParameterInputType!
-      projectId: number; // Int!
+      projectId: string; // String!
     }
     createProject: { // args
       name: string; // String!
     }
     deleteCondition: { // args
-      conditionId: number; // Int!
-      projectId: number; // Int!
+      conditionId: string; // String!
     }
     deleteIdentity: { // args
-      identityId: number; // Int!
+      identityId: string; // String!
     }
     deleteParameter: { // args
-      parameterId: number; // Int!
-      projectId: number; // Int!
+      parameterId: string; // String!
     }
     login: { // args
       email: string; // String!
       password: string; // String!
     }
     resetIdentityParameter: { // args
-      identityParameterId: number; // Int!
+      identityParameterId: string; // String!
+    }
+    revokeApiKey: { // args
+      apiKeyId: string; // String!
     }
     signup: { // args
       email: string; // String!
@@ -442,39 +466,39 @@ export interface NexusGenArgTypes {
       password: string; // String!
     }
     updateCondition: { // args
-      conditionId: number; // Int!
+      conditionId: string; // String!
       data: NexusGenInputs['ConditionInputType']; // ConditionInputType!
-      projectId: number; // Int!
     }
     updateIdentityParameter: { // args
       data: NexusGenInputs['IdentityParameterInputType']; // IdentityParameterInputType!
-      identityParameterId: number; // Int!
+      identityParameterId: string; // String!
     }
     updateParameter: { // args
       data: NexusGenInputs['ParameterInputType']; // ParameterInputType!
-      parameterId: number; // Int!
-      projectId: number; // Int!
+      parameterId: string; // String!
     }
   }
   Query: {
+    apiKeys: { // args
+      userId: string; // String!
+    }
     conditions: { // args
-      projectId: number; // Int!
+      projectId: string; // String!
     }
     formattedParameters: { // args
-      projectId: number; // Int!
+      projectId: string; // String!
     }
     getIdentity: { // args
-      identityId: number; // Int!
+      identityId: string; // String!
     }
     identities: { // args
-      projectId: number; // Int!
+      projectId: string; // String!
     }
     identityFormattedParameters: { // args
-      identity: string; // String!
-      projectId: number; // Int!
+      identityId: string; // String!
     }
     parameters: { // args
-      projectId: number; // Int!
+      projectId: string; // String!
     }
   }
 }

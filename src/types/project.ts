@@ -6,7 +6,7 @@ import { objectType } from "nexus";
 const Project = objectType({
   name: "Project",
   definition(t) {
-    t.nonNull.int("id");
+    t.nonNull.string("id");
     t.nonNull.string("name");
     t.list.field("parameters", {
       type: "Parameter",

@@ -1,4 +1,4 @@
-import { extendType, intArg, nonNull } from "nexus";
+import { extendType, nonNull, stringArg } from "nexus";
 
 const UpdateIdentityParameterMutation = extendType({
   type: "Mutation",
@@ -6,7 +6,7 @@ const UpdateIdentityParameterMutation = extendType({
     t.field("updateIdentityParameter", {
       type: "IdentityParameter",
       args: {
-        identityParameterId: nonNull(intArg()),
+        identityParameterId: nonNull(stringArg()),
         data: nonNull("IdentityParameterInputType"),
       },
       async resolve(_, args, ctx) {

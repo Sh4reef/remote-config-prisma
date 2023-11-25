@@ -6,7 +6,7 @@ import { inputObjectType } from "nexus";
 const ConditionInputType = inputObjectType({
   name: "ConditionInputType",
   definition(t) {
-    t.int("id");
+    t.string("id");
     t.nonNull.string("name");
     t.string("string_value");
     t.int("integer_value");

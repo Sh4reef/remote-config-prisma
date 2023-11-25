@@ -2,21 +2,27 @@
 ### Do not make changes to this file directly
 
 
+type ApiKey {
+  id: String!
+  name: String!
+  secret: String!
+}
+
 type AuthPayload {
   token: String
   user: User
 }
 
 type Condition {
-  id: Int!
+  id: String!
   name: String!
-  projectId: Int!
+  projectId: String!
   rules: [Rule]!
 }
 
 input ConditionInputType {
   boolean_value: Boolean
-  id: Int
+  id: String
   integer_value: Int
   json_value: JSONObject
   name: String!
@@ -27,11 +33,11 @@ input ConditionInputType {
 type ConditionValue {
   boolean_value: Boolean
   condition: Condition
-  conditionId: Int!
-  id: Int!
+  conditionId: String!
+  id: String!
   integer_value: Int
   json_value: JSONObject
-  parameterId: Int!
+  parameterId: String!
   string_value: String
 }
 
@@ -51,18 +57,17 @@ type FormattedParameters {
 
 type Identity {
   country: CountryEnum
-  id: Int!
+  id: String!
   identity: String!
   language: LanguageEnum
   parameters: [IdentityParameter]
   platform: PlatformEnum
   project: Project
-  projectId: Int!
+  projectId: String!
 }
 
 input IdentityInputType {
   country: CountryEnum
-  id: Int
   identity: String!
   language: LanguageEnum
   parameters: [IdentityParameterInputType]
@@ -70,19 +75,19 @@ input IdentityInputType {
 }
 
 type IdentityParameter {
-  id: Int!
-  identityId: Int
+  id: String!
+  identityId: String
   isOverwritten: Boolean!
   overwritten_boolean_value: Boolean
   overwritten_integer_value: Int
   overwritten_json_value: JSONObject
   overwritten_string_value: String
   parameter: Parameter
-  parameterId: Int!
+  parameterId: String!
 }
 
 input IdentityParameterInputType {
-  identityId: Int
+  identityId: String
   isOverwritten: Boolean
   overwritten_boolean_value: Boolean
   overwritten_integer_value: Int
@@ -107,29 +112,31 @@ enum LanguageEnum {
 }
 
 type Mutation {
-  createCondition(data: ConditionInputType!, projectId: Int!): Condition
-  createIdentity(data: IdentityInputType!, projectId: Int!): Identity
-  createParameter(data: ParameterInputType!, projectId: Int!): Parameter
+  createApiKey(name: String!): ApiKey
+  createCondition(data: ConditionInputType!, projectId: String!): Condition
+  createIdentity(data: IdentityInputType!, projectId: String!): Identity
+  createParameter(data: ParameterInputType!, projectId: String!): Parameter
   createProject(name: String!): Project
-  deleteCondition(conditionId: Int!, projectId: Int!): Condition
-  deleteIdentity(identityId: Int!): Identity
-  deleteParameter(parameterId: Int!, projectId: Int!): Parameter
+  deleteCondition(conditionId: String!): Condition
+  deleteIdentity(identityId: String!): Identity
+  deleteParameter(parameterId: String!): Parameter
   login(email: String!, password: String!): AuthPayload
-  resetIdentityParameter(identityParameterId: Int!): IdentityParameter
+  resetIdentityParameter(identityParameterId: String!): IdentityParameter
+  revokeApiKey(apiKeyId: String!): ApiKey
   signup(email: String!, name: String!, password: String!): AuthPayload
-  updateCondition(conditionId: Int!, data: ConditionInputType!, projectId: Int!): Condition
-  updateIdentityParameter(data: IdentityParameterInputType!, identityParameterId: Int!): IdentityParameter
-  updateParameter(data: ParameterInputType!, parameterId: Int!, projectId: Int!): Parameter
+  updateCondition(conditionId: String!, data: ConditionInputType!): Condition
+  updateIdentityParameter(data: IdentityParameterInputType!, identityParameterId: String!): IdentityParameter
+  updateParameter(data: ParameterInputType!, parameterId: String!): Parameter
 }
 
 type Parameter {
   boolean_value: Boolean
   conditionValues: [ConditionValue]!
-  id: Int!
+  id: String!
   integer_value: Int
   json_value: JSONObject
   parameter: String!
-  projectId: Int!
+  projectId: String!
   string_value: String
   value_type: ValueTypeEnum!
 }
@@ -151,28 +158,29 @@ enum PlatformEnum {
 }
 
 type Project {
-  id: Int!
+  id: String!
   name: String!
   parameters: [Parameter]
 }
 
 type Query {
-  conditions(projectId: Int!): [Condition]
-  formattedParameters(projectId: Int!): FormattedParameters
-  getIdentity(identityId: Int!): Identity
-  identities(projectId: Int!): [Identity]
-  identityFormattedParameters(identity: String!, projectId: Int!): FormattedParameters
-  parameters(projectId: Int!): [Parameter]
+  apiKeys(userId: String!): [ApiKey]
+  conditions(projectId: String!): [Condition]
+  formattedParameters(projectId: String!): FormattedParameters
+  getIdentity(identityId: String!): Identity
+  identities(projectId: String!): [Identity]
+  identityFormattedParameters(identityId: String!): FormattedParameters
+  parameters(projectId: String!): [Parameter]
   projects: [Project]
   users: [User]
 }
 
 type Rule {
   before_datetime: Boolean
-  conditionId: Int!
+  conditionId: String!
   country: String
   datetime: DateTimeISO
-  id: Int!
+  id: String!
   language: LanguageEnum
   platform: PlatformEnum
   rule: RuleEnum!
@@ -189,7 +197,7 @@ input RuleInputType {
   before_datetime: Boolean
   country: CountryEnum
   datetime: DateTimeISO
-  id: Int
+  id: String
   language: LanguageEnum
   platform: PlatformEnum
   rule: RuleEnum!
@@ -197,7 +205,7 @@ input RuleInputType {
 
 type User {
   email: String
-  id: Int!
+  id: String!
   name: String
   projects: [Project]
 }

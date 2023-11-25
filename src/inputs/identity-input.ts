@@ -6,7 +6,6 @@ import { inputObjectType } from "nexus";
 const IdentityInputType = inputObjectType({
   name: "IdentityInputType",
   definition(t) {
-    t.int("id");
     t.nonNull.string("identity");
     t.field("platform", { type: "PlatformEnum" });
     t.field("language", { type: "LanguageEnum" });

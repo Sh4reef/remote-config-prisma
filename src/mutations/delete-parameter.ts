@@ -1,4 +1,4 @@
-import { extendType, intArg, nonNull } from "nexus";
+import { extendType, nonNull, stringArg } from "nexus";
 
 const DeleteParameterMutation = extendType({
   type: "Mutation",
@@ -6,17 +6,16 @@ const DeleteParameterMutation = extendType({
     t.field("deleteParameter", {
       type: "Parameter",
       args: {
-        projectId: nonNull(intArg()),
-        parameterId: nonNull(intArg()),
+        parameterId: nonNull(stringArg()),
       },
       async resolve(_, args, ctx) {
         await ctx.prisma.parameter.update({
-          where: { projectId: args.projectId, id: args.parameterId },
+          where: { id: args.parameterId },
           data: {
             identities: {
               deleteMany: {
-                parameterId: args.parameterId
-              }
+                parameterId: args.parameterId,
+              },
             },
             conditionValues: {
               deleteMany: {
@@ -26,7 +25,7 @@ const DeleteParameterMutation = extendType({
           },
         });
         return await ctx.prisma.parameter.delete({
-          where: { projectId: args.projectId, id: args.parameterId },
+          where: { id: args.parameterId },
         });
       },
     });

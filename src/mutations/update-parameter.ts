@@ -1,4 +1,5 @@
-import { extendType, intArg, nonNull } from "nexus";
+import { extendType, nonNull, stringArg } from "nexus";
+import { getUserId } from "../utils";
 
 const UpdateParameterMutation = extendType({
   type: "Mutation",
@@ -6,13 +7,13 @@ const UpdateParameterMutation = extendType({
     t.field("updateParameter", {
       type: "Parameter",
       args: {
-        projectId: nonNull(intArg()),
-        parameterId: nonNull(intArg()),
+        parameterId: nonNull(stringArg()),
         data: nonNull("ParameterInputType"),
       },
       async resolve(_, args, ctx) {
+        const userId = getUserId(ctx);
         const updatedParameter = await ctx.prisma.parameter.update({
-          where: { projectId: args.projectId, id: args.parameterId },
+          where: { id: args.parameterId },
           data: {
             parameter: args.data.parameter,
             value_type: args.data.value_type,
@@ -30,9 +31,10 @@ const UpdateParameterMutation = extendType({
 
         for (const condition of args.data.conditions) {
           const createdCondition = await ctx.prisma.condition.upsert({
-            where: { id: Number(condition.id || 0) },
+            where: { id: condition.id as string | undefined },
             create: {
-              projectId: args.projectId,
+              userId,
+              projectId: updatedParameter.projectId,
               name: condition.name,
             },
             update: {
@@ -51,7 +53,7 @@ const UpdateParameterMutation = extendType({
             };
             await ctx.prisma.rule.upsert({
               where: {
-                id: Number(rule.id || 0),
+                id: rule.id as string | undefined,
               },
               create: {
                 conditionId: createdCondition.id,

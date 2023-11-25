@@ -1,4 +1,4 @@
-import { extendType, intArg, nonNull } from "nexus";
+import { extendType, nonNull, stringArg } from "nexus";
 
 const ResetIdentityParameterMutation = extendType({
   type: "Mutation",
@@ -6,7 +6,7 @@ const ResetIdentityParameterMutation = extendType({
     t.field("resetIdentityParameter", {
       type: "IdentityParameter",
       args: {
-        identityParameterId: nonNull(intArg()),
+        identityParameterId: nonNull(stringArg()),
       },
       async resolve(_, args, ctx) {
         return await ctx.prisma.identityParameter.update({
@@ -17,7 +17,7 @@ const ResetIdentityParameterMutation = extendType({
             isOverwritten: false,
             overwritten_string_value: null,
             overwritten_integer_value: null,
-            overwritten_boolean_value: null
+            overwritten_boolean_value: null,
           },
         });
       },

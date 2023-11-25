@@ -1,5 +1,4 @@
-import { extendType, intArg, nonNull } from "nexus";
-import { getUserId } from "../utils";
+import { extendType, nonNull, stringArg } from "nexus";
 
 const ParametersQuery = extendType({
   type: "Query",
@@ -7,12 +6,11 @@ const ParametersQuery = extendType({
     t.list.field("parameters", {
       type: "Parameter",
       args: {
-        projectId: nonNull(intArg()),
+        projectId: nonNull(stringArg()),
       },
       resolve(_, args, ctx) {
-        const userId = getUserId(ctx);
         return ctx.prisma.parameter.findMany({
-          where: { projectId: args.projectId, project: { userId } },
+          where: { projectId: args.projectId },
         });
       },
     });

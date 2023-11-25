@@ -6,7 +6,7 @@ import { objectType } from "nexus";
 const User = objectType({
   name: "User",
   definition(t) {
-    t.nonNull.int("id");
+    t.nonNull.string("id");
     t.string("name");
     t.string("email");
     t.list.field("projects", {

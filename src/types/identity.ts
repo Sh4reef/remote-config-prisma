@@ -6,8 +6,8 @@ import { objectType } from "nexus";
 const Identity = objectType({
   name: "Identity",
   definition(t) {
-    t.nonNull.int("id");
-    t.nonNull.int("projectId");
+    t.nonNull.string("id");
+    t.nonNull.string("projectId");
     t.nonNull.string("identity");
     t.field("platform", { type: "PlatformEnum" });
     t.field("language", { type: "LanguageEnum" });

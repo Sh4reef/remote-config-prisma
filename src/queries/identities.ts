@@ -1,4 +1,4 @@
-import { extendType, intArg, nonNull } from "nexus";
+import { extendType, nonNull, stringArg } from "nexus";
 
 const IdentitiesQuery = extendType({
   type: "Query",
@@ -6,7 +6,7 @@ const IdentitiesQuery = extendType({
     t.list.field("identities", {
       type: "Identity",
       args: {
-        projectId: nonNull(intArg()),
+        projectId: nonNull(stringArg()),
       },
       async resolve(_, args, ctx) {
         return await ctx.prisma.identity.findMany({

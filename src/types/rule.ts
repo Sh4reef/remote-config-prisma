@@ -6,8 +6,8 @@ import { objectType } from "nexus";
 const Rule = objectType({
   name: "Rule",
   definition(t) {
-    t.nonNull.int("id");
-    t.nonNull.int("conditionId");
+    t.nonNull.string("id");
+    t.nonNull.string("conditionId");
     t.nonNull.field("rule", { type: "RuleEnum" });
     t.field("language", { type: "LanguageEnum" });
     t.field("platform", { type: "PlatformEnum" });

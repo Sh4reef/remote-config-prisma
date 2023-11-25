@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { IncomingMessage } from "http";
 
-const prisma = new PrismaClient();
+export const prisma = new PrismaClient();
 
 export type Context = {
   prisma: PrismaClient;

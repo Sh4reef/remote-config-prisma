@@ -1,5 +1,4 @@
-import { extendType, intArg, nonNull } from "nexus";
-import { getUserId } from "../utils";
+import { extendType, nonNull, stringArg } from "nexus";
 import { isRulesApplied } from "../helpers";
 
 const FormattedParametersQuery = extendType({
@@ -8,13 +7,11 @@ const FormattedParametersQuery = extendType({
     t.field("formattedParameters", {
       type: "FormattedParameters",
       args: {
-        projectId: nonNull(intArg()),
+        projectId: nonNull(stringArg()),
       },
       async resolve(_, args, ctx) {
-        const userId = getUserId(ctx);
-
         const parameters = await ctx.prisma.parameter.findMany({
-          where: { projectId: args.projectId, project: { userId } },
+          where: { projectId: args.projectId },
           include: {
             conditionValues: {
               include: {

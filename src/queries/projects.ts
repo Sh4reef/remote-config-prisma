@@ -8,7 +8,9 @@ const ProjectsQuery = extendType({
       type: "Project",
       async resolve(_, __, ctx) {
         const userId = getUserId(ctx);
-        return await ctx.prisma.project.findMany({ where: { userId } });
+        return await ctx.prisma.project.findMany({
+          where: { userId },
+        });
       },
     });
   },

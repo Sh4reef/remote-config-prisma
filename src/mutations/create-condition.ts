@@ -1,4 +1,5 @@
-import { extendType, intArg, nonNull } from "nexus";
+import { extendType, nonNull, stringArg } from "nexus";
+import { getUserId } from "../utils";
 
 const CreateConditionMutation = extendType({
   type: "Mutation",
@@ -6,12 +7,14 @@ const CreateConditionMutation = extendType({
     t.field("createCondition", {
       type: "Condition",
       args: {
-        projectId: nonNull(intArg()),
+        projectId: nonNull(stringArg()),
         data: nonNull("ConditionInputType"),
       },
       async resolve(_, args, ctx) {
+        const userId = getUserId(ctx);
         const createdCondition = await ctx.prisma.condition.create({
           data: {
+            userId,
             projectId: args.projectId,
             name: args.data.name,
           },

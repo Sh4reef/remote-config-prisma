@@ -6,7 +6,7 @@ import { inputObjectType } from "nexus";
 const IdentityParameterInputType = inputObjectType({
   name: "IdentityParameterInputType",
   definition(t) {
-    t.int("identityId");
+    t.string("identityId");
     t.boolean("isOverwritten");
     t.string("overwritten_string_value");
     t.int("overwritten_integer_value");

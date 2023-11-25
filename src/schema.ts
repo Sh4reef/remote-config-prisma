@@ -50,6 +50,10 @@ import {
 } from "graphql-scalars";
 import IdentityQuery from "./queries/identity";
 import DeleteIdentityMutation from "./mutations/delete-identity";
+import ApiKey from "./types/api-key";
+import APIKeysQuery from "./queries/api-keys";
+import RevokeApiKeyMutation from "./mutations/revoke-api-key";
+import CreateApiKeyMutation from "./mutations/create-api-key";
 
 const schema = makeSchema({
   types: [
@@ -62,9 +66,11 @@ const schema = makeSchema({
     FormattedParametersQuery,
     IdentityQuery,
     IdentityFormattedParametersQuery,
+    APIKeysQuery,
 
     // types
     User,
+    ApiKey,
     Project,
     Identity,
     Parameter,
@@ -89,6 +95,8 @@ const schema = makeSchema({
     UpdateIdentityParameterMutation,
     ResetIdentityParameterMutation,
     DeleteIdentityMutation,
+    CreateApiKeyMutation,
+    RevokeApiKeyMutation,
 
     // scalar types
     asNexusMethod(GraphQLDateTimeISO, "datetime"),

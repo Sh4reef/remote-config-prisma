@@ -1,4 +1,4 @@
-import { extendType, intArg, nonNull } from "nexus";
+import { extendType, nonNull, stringArg } from "nexus";
 
 const IdentityQuery = extendType({
   type: "Query",
@@ -6,7 +6,7 @@ const IdentityQuery = extendType({
     t.field("getIdentity", {
       type: "Identity",
       args: {
-        identityId: nonNull(intArg()),
+        identityId: nonNull(stringArg()),
       },
       async resolve(_, args, ctx) {
         return await ctx.prisma.identity.findUniqueOrThrow({

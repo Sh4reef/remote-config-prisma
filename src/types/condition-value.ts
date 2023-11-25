@@ -6,13 +6,13 @@ import { objectType } from "nexus";
 const ConditionValue = objectType({
   name: "ConditionValue",
   definition(t) {
-    t.nonNull.int("id");
+    t.nonNull.string("id");
     t.string("string_value");
     t.int("integer_value");
     t.boolean("boolean_value");
     t.jsonObject("json_value");
-    t.nonNull.int("conditionId");
-    t.nonNull.int("parameterId");
+    t.nonNull.string("conditionId");
+    t.nonNull.string("parameterId");
     t.field("condition", {
       type: "Condition",
       async resolve(parent, __, ctx) {

@@ -1,4 +1,4 @@
-import { extendType, intArg, nonNull } from "nexus";
+import { extendType, nonNull, stringArg } from "nexus";
 
 const UpdateConditionMutation = extendType({
   type: "Mutation",
@@ -6,13 +6,12 @@ const UpdateConditionMutation = extendType({
     t.field("updateCondition", {
       type: "Condition",
       args: {
-        projectId: nonNull(intArg()),
-        conditionId: nonNull(intArg()),
+        conditionId: nonNull(stringArg()),
         data: nonNull("ConditionInputType"),
       },
       async resolve(_, args, ctx) {
         const updatedCondition = await ctx.prisma.condition.update({
-          where: { projectId: args.projectId, id: args.conditionId },
+          where: { id: args.conditionId },
           data: {
             name: args.data.name,
           },
@@ -29,7 +28,7 @@ const UpdateConditionMutation = extendType({
           };
           await ctx.prisma.rule.upsert({
             where: {
-              id: Number(rule.id || 0),
+              id: rule.id as string | undefined,
             },
             create: {
               conditionId: updatedCondition.id,

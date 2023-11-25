@@ -1,4 +1,4 @@
-import { extendType, intArg, nonNull } from "nexus";
+import { extendType, nonNull, stringArg } from "nexus";
 
 const DeleteConditionMutation = extendType({
   type: "Mutation",
@@ -6,12 +6,11 @@ const DeleteConditionMutation = extendType({
     t.field("deleteCondition", {
       type: "Condition",
       args: {
-        projectId: nonNull(intArg()),
-        conditionId: nonNull(intArg()),
+        conditionId: nonNull(stringArg()),
       },
       async resolve(_, args, ctx) {
         await ctx.prisma.condition.update({
-          where: { projectId: args.projectId, id: args.conditionId },
+          where: { id: args.conditionId },
           data: {
             rules: {
               deleteMany: {
@@ -26,7 +25,7 @@ const DeleteConditionMutation = extendType({
           },
         });
         return await ctx.prisma.condition.delete({
-          where: { projectId: args.projectId, id: args.conditionId },
+          where: { id: args.conditionId },
         });
       },
     });

@@ -11,88 +11,79 @@ datasource db {
 }
 
 model User {
-  id    Int     @id @default(autoincrement())
+  id    String  @id @default(uuid())
   name  String?
   email String  @unique
   hash  String
-
-  projects Project[]
-  APIKey   APIKey[]
 }
 
-model APIKey {
-  id     Int    @id @default(autoincrement())
+model ApiKey {
+  id     String @id @default(uuid())
+  userId String
   name   String
   secret String
-
-  user   User @relation(fields: [userId], references: [id])
-  userId Int
 }
 
 model Project {
-  id   Int    @id @default(autoincrement())
-  name String @unique
-
-  user       User        @relation(fields: [userId], references: [id])
-  userId     Int
-  parameters Parameter[]
-  condtions  Condition[]
-  identities Identity[]
+  id     String @id @default(uuid())
+  name   String
+  userId String
 }
 
 model Identity {
-  id       Int           @id @default(autoincrement())
-  identity String        @unique
+  id       String        @id @default(uuid())
+  identity String
   platform PlatformEnum?
   language LanguageEnum?
   country  CountryEnum?
 
-  project    Project             @relation(fields: [projectId], references: [id])
-  projectId  Int
+  userId     String
+  projectId  String
   parameters IdentityParameter[]
 }
 
 model IdentityParameter {
-  id                        Int      @id @default(autoincrement())
+  id                        String   @id @default(uuid())
   isOverwritten             Boolean  @default(false)
   overwritten_string_value  String?
   overwritten_integer_value Int?
   overwritten_boolean_value Boolean?
   overwritten_json_value    Json?
 
+  userId      String
   identity    Identity  @relation(fields: [identityId], references: [id])
-  identityId  Int
+  identityId  String
   parameter   Parameter @relation(fields: [parameterId], references: [id])
-  parameterId Int
+  parameterId String
 }
 
 model Parameter {
-  id            Int           @id @default(autoincrement())
-  parameter     String        @unique
+  id            String        @id @default(uuid())
+  parameter     String
   value_type    ValueTypeEnum
   string_value  String?
   integer_value Int?
   boolean_value Boolean?
   json_value    Json?
 
-  project         Project             @relation(fields: [projectId], references: [id])
-  projectId       Int
+  userId          String
+  projectId       String
   conditionValues ConditionValue[]
   identities      IdentityParameter[]
 }
 
 model Condition {
-  id   Int    @id @default(autoincrement())
+  id   String @id @default(uuid())
   name String
 
-  project         Project          @relation(fields: [projectId], references: [id])
-  projectId       Int
+  userId          String
+  projectId       String
   conditionValues ConditionValue[]
   rules           Rule[]
 }
 
 model Rule {
-  id              Int           @id @default(autoincrement())
+  id              String        @id @default(uuid())
   rule            RuleEnum
   datetime        String?
   platform        PlatformEnum?
@@ -101,20 +92,20 @@ model Rule {
   before_datetime Boolean?
 
   condition   Condition @relation(fields: [conditionId], references: [id])
-  conditionId Int
+  conditionId String
 }
 
 model ConditionValue {
-  id            Int      @id @default(autoincrement())
+  id            String   @id @default(uuid())
   string_value  String?
   integer_value Int?
   boolean_value Boolean?
   json_value    Json?
 
   parameter   Parameter @relation(fields: [parameterId], references: [id])
-  parameterId Int
+  parameterId String
   condition   Condition @relation(fields: [conditionId], references: [id])
-  conditionId Int
+  conditionId String
 }
 
 enum ValueTypeEnum {

@@ -6,7 +6,7 @@ import { inputObjectType } from "nexus";
 const RuleInputType = inputObjectType({
   name: "RuleInputType",
   definition(t) {
-    t.int("id");
+    t.string("id");
     t.nonNull.field("rule", { type: "RuleEnum" });
     t.field("language", { type: "LanguageEnum" });
     t.field("platform", { type: "PlatformEnum" });
