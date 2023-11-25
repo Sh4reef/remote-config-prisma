@@ -244,6 +244,7 @@ export interface NexusGenFieldTypes {
     createParameter: NexusGenRootTypes['Parameter'] | null; // Parameter
     createProject: NexusGenRootTypes['Project'] | null; // Project
     deleteCondition: NexusGenRootTypes['Condition'] | null; // Condition
+    deleteIdentity: NexusGenRootTypes['Identity'] | null; // Identity
     deleteParameter: NexusGenRootTypes['Parameter'] | null; // Parameter
     login: NexusGenRootTypes['AuthPayload'] | null; // AuthPayload
     resetIdentityParameter: NexusGenRootTypes['IdentityParameter'] | null; // IdentityParameter
@@ -271,6 +272,7 @@ export interface NexusGenFieldTypes {
   Query: { // field return type
     conditions: Array<NexusGenRootTypes['Condition'] | null> | null; // [Condition]
     formattedParameters: NexusGenRootTypes['FormattedParameters'] | null; // FormattedParameters
+    getIdentity: NexusGenRootTypes['Identity'] | null; // Identity
     identities: Array<NexusGenRootTypes['Identity'] | null> | null; // [Identity]
     identityFormattedParameters: NexusGenRootTypes['FormattedParameters'] | null; // FormattedParameters
     parameters: Array<NexusGenRootTypes['Parameter'] | null> | null; // [Parameter]
@@ -346,6 +348,7 @@ export interface NexusGenFieldTypeNames {
     createParameter: 'Parameter'
     createProject: 'Project'
     deleteCondition: 'Condition'
+    deleteIdentity: 'Identity'
     deleteParameter: 'Parameter'
     login: 'AuthPayload'
     resetIdentityParameter: 'IdentityParameter'
@@ -373,6 +376,7 @@ export interface NexusGenFieldTypeNames {
   Query: { // field return type name
     conditions: 'Condition'
     formattedParameters: 'FormattedParameters'
+    getIdentity: 'Identity'
     identities: 'Identity'
     identityFormattedParameters: 'FormattedParameters'
     parameters: 'Parameter'
@@ -418,6 +422,9 @@ export interface NexusGenArgTypes {
       conditionId: number; // Int!
       projectId: number; // Int!
     }
+    deleteIdentity: { // args
+      identityId: number; // Int!
+    }
     deleteParameter: { // args
       parameterId: number; // Int!
       projectId: number; // Int!
@@ -455,6 +462,9 @@ export interface NexusGenArgTypes {
     }
     formattedParameters: { // args
       projectId: number; // Int!
+    }
+    getIdentity: { // args
+      identityId: number; // Int!
     }
     identities: { // args
       projectId: number; // Int!

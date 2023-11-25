@@ -112,6 +112,7 @@ type Mutation {
   createParameter(data: ParameterInputType!, projectId: Int!): Parameter
   createProject(name: String!): Project
   deleteCondition(conditionId: Int!, projectId: Int!): Condition
+  deleteIdentity(identityId: Int!): Identity
   deleteParameter(parameterId: Int!, projectId: Int!): Parameter
   login(email: String!, password: String!): AuthPayload
   resetIdentityParameter(identityParameterId: Int!): IdentityParameter
@@ -158,6 +159,7 @@ type Project {
 type Query {
   conditions(projectId: Int!): [Condition]
   formattedParameters(projectId: Int!): FormattedParameters
+  getIdentity(identityId: Int!): Identity
   identities(projectId: Int!): [Identity]
   identityFormattedParameters(identity: String!, projectId: Int!): FormattedParameters
   parameters(projectId: Int!): [Parameter]

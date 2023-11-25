@@ -48,6 +48,8 @@ import {
   GraphQLJSON,
   GraphQLJSONObject,
 } from "graphql-scalars";
+import IdentityQuery from "./queries/identity";
+import DeleteIdentityMutation from "./mutations/delete-identity";
 
 const schema = makeSchema({
   types: [
@@ -58,6 +60,7 @@ const schema = makeSchema({
     ParametersQuery,
     ConditionsQuery,
     FormattedParametersQuery,
+    IdentityQuery,
     IdentityFormattedParametersQuery,
 
     // types
@@ -85,6 +88,7 @@ const schema = makeSchema({
     DeleteConditionMutation,
     UpdateIdentityParameterMutation,
     ResetIdentityParameterMutation,
+    DeleteIdentityMutation,
 
     // scalar types
     asNexusMethod(GraphQLDateTimeISO, "datetime"),
@@ -111,7 +115,7 @@ const schema = makeSchema({
     typegen: path.join(__dirname, "generated", "nexus.ts"),
   },
   contextType: {
-    module: path.join(__dirname, 'context.ts'),
+    module: path.join(__dirname, "context.ts"),
     export: "Context",
   },
 });
