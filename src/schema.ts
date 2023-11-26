@@ -54,6 +54,7 @@ import ApiKey from "./types/api-key";
 import APIKeysQuery from "./queries/api-keys";
 import RevokeApiKeyMutation from "./mutations/revoke-api-key";
 import CreateApiKeyMutation from "./mutations/create-api-key";
+import DeleteProjectMutation from "./mutations/delete-project";
 
 const schema = makeSchema({
   types: [
@@ -84,18 +85,19 @@ const schema = makeSchema({
     // // mutations
     SignupMutation,
     LoginMutation,
+    CreateApiKeyMutation,
     CreateProjectMutation,
     CreateIdentityMutation,
     CreateParameterMutation,
-    UpdateParameterMutation,
-    DeleteParameterMutation,
     CreateConditionMutation,
+    UpdateParameterMutation,
     UpdateConditionMutation,
-    DeleteConditionMutation,
     UpdateIdentityParameterMutation,
-    ResetIdentityParameterMutation,
+    DeleteProjectMutation,
     DeleteIdentityMutation,
-    CreateApiKeyMutation,
+    DeleteParameterMutation,
+    DeleteConditionMutation,
+    ResetIdentityParameterMutation,
     RevokeApiKeyMutation,
 
     // scalar types

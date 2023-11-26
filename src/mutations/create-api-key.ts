@@ -1,4 +1,5 @@
 import { extendType, nonNull, stringArg } from "nexus";
+import crypto from "crypto";
 import { getUserId } from "../utils";
 
 const CreateApiKeyMutation = extendType({
@@ -15,7 +16,7 @@ const CreateApiKeyMutation = extendType({
           data: {
             userId,
             name: args.name,
-            secret: crypto.randomUUID(),
+            secret: crypto.randomBytes(22).toString("base64url"),
           },
         });
       },

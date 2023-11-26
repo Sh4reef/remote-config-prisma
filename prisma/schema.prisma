@@ -28,6 +28,10 @@ model Project {
   id     String @id @default(uuid())
   name   String
   userId String
+
+  conditions Condition[] @ignore
+  parameters Parameter[] @ignore
+  identities Identity[]  @ignore
 }
 
 model Identity {
@@ -38,6 +42,7 @@ model Identity {
   country  CountryEnum?
 
   userId     String
+  project    Project             @relation(fields: [projectId], references: [id], onDelete: Cascade)
   projectId  String
   parameters IdentityParameter[]
 }
@@ -51,9 +56,9 @@ model IdentityParameter {
   overwritten_json_value    Json?
 
   userId      String
-  identity    Identity  @relation(fields: [identityId], references: [id])
+  identity    Identity  @relation(fields: [identityId], references: [id], onDelete: Cascade)
   identityId  String
-  parameter   Parameter @relation(fields: [parameterId], references: [id])
+  parameter   Parameter @relation(fields: [parameterId], references: [id], onDelete: Cascade)
   parameterId String
 }
 
@@ -67,6 +72,7 @@ model Parameter {
   json_value    Json?
 
   userId          String
+  project         Project             @relation(fields: [projectId], references: [id], onDelete: Cascade)
   projectId       String
   conditionValues ConditionValue[]
   identities      IdentityParameter[]
@@ -77,6 +83,7 @@ model Condition {
   name String
 
   userId          String
+  project         Project          @relation(fields: [projectId], references: [id], onDelete: Cascade)
   projectId       String
   conditionValues ConditionValue[]
   rules           Rule[]
@@ -91,7 +98,7 @@ model Rule {
   country         CountryEnum?
   before_datetime Boolean?
 
-  condition   Condition @relation(fields: [conditionId], references: [id])
+  condition   Condition @relation(fields: [conditionId], references: [id], onDelete: Cascade)
   conditionId String
 }
 
@@ -102,9 +109,9 @@ model ConditionValue {
   boolean_value Boolean?
   json_value    Json?
 
-  parameter   Parameter @relation(fields: [parameterId], references: [id])
+  parameter   Parameter @relation(fields: [parameterId], references: [id], onDelete: Cascade)
   parameterId String
-  condition   Condition @relation(fields: [conditionId], references: [id])
+  condition   Condition @relation(fields: [conditionId], references: [id], onDelete: Cascade)
   conditionId String
 }
 

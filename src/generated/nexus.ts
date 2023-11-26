@@ -256,6 +256,7 @@ export interface NexusGenFieldTypes {
     deleteCondition: NexusGenRootTypes['Condition'] | null; // Condition
     deleteIdentity: NexusGenRootTypes['Identity'] | null; // Identity
     deleteParameter: NexusGenRootTypes['Parameter'] | null; // Parameter
+    deleteProject: NexusGenRootTypes['Project'] | null; // Project
     login: NexusGenRootTypes['AuthPayload'] | null; // AuthPayload
     resetIdentityParameter: NexusGenRootTypes['IdentityParameter'] | null; // IdentityParameter
     revokeApiKey: NexusGenRootTypes['ApiKey'] | null; // ApiKey
@@ -368,6 +369,7 @@ export interface NexusGenFieldTypeNames {
     deleteCondition: 'Condition'
     deleteIdentity: 'Identity'
     deleteParameter: 'Parameter'
+    deleteProject: 'Project'
     login: 'AuthPayload'
     resetIdentityParameter: 'IdentityParameter'
     revokeApiKey: 'ApiKey'
@@ -449,6 +451,9 @@ export interface NexusGenArgTypes {
     }
     deleteParameter: { // args
       parameterId: string; // String!
+    }
+    deleteProject: { // args
+      projectId: string; // String!
     }
     login: { // args
       email: string; // String!

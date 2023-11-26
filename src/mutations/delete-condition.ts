@@ -9,21 +9,6 @@ const DeleteConditionMutation = extendType({
         conditionId: nonNull(stringArg()),
       },
       async resolve(_, args, ctx) {
-        await ctx.prisma.condition.update({
-          where: { id: args.conditionId },
-          data: {
-            rules: {
-              deleteMany: {
-                conditionId: args.conditionId,
-              },
-            },
-            conditionValues: {
-              deleteMany: {
-                conditionId: args.conditionId,
-              },
-            },
-          },
-        });
         return await ctx.prisma.condition.delete({
           where: { id: args.conditionId },
         });

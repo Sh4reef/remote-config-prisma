@@ -1,4 +1,5 @@
 import { extendType, nonNull, stringArg } from "nexus";
+import crypto from "crypto";
 import { getUserId } from "../utils";
 
 const RevokeApiKeyMutation = extendType({
@@ -17,7 +18,7 @@ const RevokeApiKeyMutation = extendType({
             id: args.apiKeyId,
           },
           data: {
-            secret: crypto.randomUUID(),
+            secret: crypto.randomBytes(22).toString("base64url"),
           },
         });
       },

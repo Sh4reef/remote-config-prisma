@@ -120,6 +120,7 @@ type Mutation {
   deleteCondition(conditionId: String!): Condition
   deleteIdentity(identityId: String!): Identity
   deleteParameter(parameterId: String!): Parameter
+  deleteProject(projectId: String!): Project
   login(email: String!, password: String!): AuthPayload
   resetIdentityParameter(identityParameterId: String!): IdentityParameter
   revokeApiKey(apiKeyId: String!): ApiKey
