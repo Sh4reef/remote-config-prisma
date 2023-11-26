@@ -6,9 +6,8 @@ import { expressMiddleware } from "@apollo/server/express4";
 import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer";
 import schema from "./schema";
 import createContext, { Context } from "./context";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "./client";
 
-const prisma = new PrismaClient();
 const app = express();
 const httpServer = http.createServer(app);
 const apolloServer = new ApolloServer<Context>({
