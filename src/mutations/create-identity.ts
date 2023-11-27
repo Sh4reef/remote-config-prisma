@@ -14,9 +14,10 @@ const CreateIdentityMutation = extendType({
         const userId = getUserId(ctx);
         const parameters = await ctx.prisma.parameter.findMany({
           where: { projectId: args.projectId },
-          select: { id: true },
+          select: { id: true, environment: true },
         });
-        return await ctx.prisma.identity.create({
+
+        const createdIdentity = await ctx.prisma.identity.create({
           data: {
             userId,
             projectId: args.projectId,
@@ -24,16 +25,33 @@ const CreateIdentityMutation = extendType({
             platform: args.data.platform,
             language: args.data.language,
             country: args.data.country,
+            environment: args.data.environment,
             parameters: {
               createMany: {
-                data: parameters.map((parameter) => ({
-                  userId,
-                  parameterId: parameter.id,
-                })),
+                data:
+                  args.data.environment === "development"
+                    ? parameters
+                        .filter(
+                          (parameter) => parameter.environment === "development"
+                        )
+                        .map((parameter) => ({
+                          userId,
+                          parameterId: parameter.id,
+                        }))
+                    : parameters
+                        .filter(
+                          (parameter) => parameter.environment === "production"
+                        )
+                        .map((parameter) => ({
+                          userId,
+                          parameterId: parameter.id,
+                        })),
               },
             },
           },
         });
+
+        return createdIdentity;
       },
     });
   },

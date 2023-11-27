@@ -1,4 +1,4 @@
-import { Rule } from "@prisma/client";
+import { PrismaClient, Rule } from "@prisma/client";
 import moment from "moment";
 
 export const isRulesApplied = (rules: Rule[]) => {
@@ -16,4 +16,61 @@ export const isRulesApplied = (rules: Rule[]) => {
       }
     }
   });
+};
+
+export const getIdentityFormattedParameters = async (
+  prisma: PrismaClient,
+  identityId: string
+) => {
+  const identityParameters = await prisma.identityParameter.findMany({
+    where: {
+      identity: { id: identityId },
+    },
+    include: {
+      parameter: {
+        include: {
+          conditionValues: {
+            include: {
+              condition: {
+                include: {
+                  rules: true,
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  });
+
+  const formattedIdentityParameters = identityParameters.reduce(
+    (prevIdentityParameters, identityParameter) => {
+      const parameter = identityParameter.parameter;
+      const valueType = parameter.value_type;
+      const conditionValues = parameter.conditionValues;
+      const isOverwritten = identityParameter.isOverwritten;
+      const overwrittenValue =
+        identityParameter[`overwritten_${valueType}_value`];
+      let value = parameter[`${valueType}_value`];
+
+      if (!isOverwritten) {
+        for (const conditionValue of conditionValues) {
+          const conditionalValue = conditionValue[`${valueType}_value`];
+
+          const rules = conditionValue.condition.rules;
+          const rulesApplied = isRulesApplied(rules);
+
+          value = rulesApplied ? conditionalValue : value;
+        }
+      }
+
+      return {
+        ...prevIdentityParameters,
+        [parameter.parameter]: isOverwritten ? overwrittenValue : value,
+      };
+    },
+    {}
+  );
+
+  return formattedIdentityParameters;
 };

@@ -3,6 +3,7 @@
 
 
 type ApiKey {
+  environment: EnvironmentEnum!
   id: String!
   name: String!
   secret: String!
@@ -51,12 +52,18 @@ A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `dat
 """
 scalar DateTimeISO
 
+enum EnvironmentEnum {
+  development
+  production
+}
+
 type FormattedParameters {
   parameters: JSONObject
 }
 
 type Identity {
   country: CountryEnum
+  environment: EnvironmentEnum!
   id: String!
   identity: String!
   language: LanguageEnum
@@ -64,10 +71,12 @@ type Identity {
   platform: PlatformEnum
   project: Project
   projectId: String!
+  userId: String!
 }
 
 input IdentityInputType {
   country: CountryEnum
+  environment: EnvironmentEnum!
   identity: String!
   language: LanguageEnum
   parameters: [IdentityParameterInputType]
@@ -112,7 +121,6 @@ enum LanguageEnum {
 }
 
 type Mutation {
-  createApiKey(name: String!): ApiKey
   createCondition(data: ConditionInputType!, projectId: String!): Condition
   createIdentity(data: IdentityInputType!, projectId: String!): Identity
   createParameter(data: ParameterInputType!, projectId: String!): Parameter
@@ -131,8 +139,11 @@ type Mutation {
 }
 
 type Parameter {
+  anotherEnvironmentParameterId: String
   boolean_value: Boolean
   conditionValues: [ConditionValue]!
+  enabled: Boolean!
+  environment: EnvironmentEnum!
   id: String!
   integer_value: Int
   json_value: JSONObject
@@ -145,6 +156,8 @@ type Parameter {
 input ParameterInputType {
   boolean_value: Boolean
   conditions: [ConditionInputType!]! = []
+  enabled: Boolean! = false
+  environment: EnvironmentEnum!
   integer_value: Int
   json_value: JSONObject
   parameter: String!
@@ -159,9 +172,11 @@ enum PlatformEnum {
 }
 
 type Project {
+  apiKeys: [ApiKey]
   id: String!
   name: String!
   parameters: [Parameter]
+  userId: String!
 }
 
 type Query {

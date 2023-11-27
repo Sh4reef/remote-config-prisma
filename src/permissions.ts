@@ -10,7 +10,6 @@ const permissions = shield(
     },
     Mutation: {
       "*": rules.isOwner,
-      createApiKey: rules.isAuthenticated,
       createProject: and(rules.isAuthenticated, rules.isProjectUnique),
       createIdentity: and(rules.isOwner, rules.isIdentityUnique),
       createParameter: and(rules.isOwner, rules.isParameterUnique),

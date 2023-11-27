@@ -7,6 +7,7 @@ import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHt
 import schema from "./schema";
 import createContext, { Context } from "./context";
 import { prisma } from "./client";
+import { getIdentityFormattedParameters } from "./helpers";
 
 const app = express();
 const httpServer = http.createServer(app);
@@ -33,9 +34,36 @@ const apolloServer = new ApolloServer<Context>({
       })
     );
 
-    app.get("/identities", async (req, res) => {
-      const identities = await prisma.identity.findMany();
-      return res.json(identities);
+    app.get("/parameters", async (req, res) => {
+      const query = req.query;
+      const apiKeyObj = await prisma.apiKey.findFirst({
+        where: { secret: query.apiKey as string },
+        select: {
+          userId: true,
+          environment: true,
+        },
+      });
+      if (!apiKeyObj) {
+        return res.status(403).json({ message: "Forbidden" });
+      }
+      const identity = await prisma.identity.findFirst({
+        where: {
+          identity: query.identity as string,
+          userId: apiKeyObj.userId,
+          environment: apiKeyObj.environment,
+        },
+        select: {
+          id: true,
+        },
+      });
+      if (!identity) {
+        return res.status(403).json({ message: "Forbidden" });
+      }
+      const parameters = await getIdentityFormattedParameters(
+        prisma,
+        identity.id
+      );
+      return res.json(parameters);
     });
 
     await new Promise<void>((resolve) =>

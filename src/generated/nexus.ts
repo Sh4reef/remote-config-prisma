@@ -56,6 +56,7 @@ export interface NexusGenInputs {
   }
   IdentityInputType: { // input type
     country?: NexusGenEnums['CountryEnum'] | null; // CountryEnum
+    environment: NexusGenEnums['EnvironmentEnum']; // EnvironmentEnum!
     identity: string; // String!
     language?: NexusGenEnums['LanguageEnum'] | null; // LanguageEnum
     parameters?: Array<NexusGenInputs['IdentityParameterInputType'] | null> | null; // [IdentityParameterInputType]
@@ -73,6 +74,8 @@ export interface NexusGenInputs {
   ParameterInputType: { // input type
     boolean_value?: boolean | null; // Boolean
     conditions: NexusGenInputs['ConditionInputType'][]; // [ConditionInputType!]!
+    enabled: boolean; // Boolean!
+    environment: NexusGenEnums['EnvironmentEnum']; // EnvironmentEnum!
     integer_value?: number | null; // Int
     json_value?: NexusGenScalars['JSONObject'] | null; // JSONObject
     parameter: string; // String!
@@ -92,6 +95,7 @@ export interface NexusGenInputs {
 
 export interface NexusGenEnums {
   CountryEnum: "saudi_arabia" | "united_states"
+  EnvironmentEnum: "development" | "production"
   LanguageEnum: "arabic" | "english"
   PlatformEnum: "android" | "ios" | "web"
   RuleEnum: "country" | "datetime" | "language" | "platform"
@@ -111,6 +115,7 @@ export interface NexusGenScalars {
 
 export interface NexusGenObjects {
   ApiKey: { // root type
+    environment: NexusGenEnums['EnvironmentEnum']; // EnvironmentEnum!
     id: string; // String!
     name: string; // String!
     secret: string; // String!
@@ -138,11 +143,13 @@ export interface NexusGenObjects {
   }
   Identity: { // root type
     country?: NexusGenEnums['CountryEnum'] | null; // CountryEnum
+    environment: NexusGenEnums['EnvironmentEnum']; // EnvironmentEnum!
     id: string; // String!
     identity: string; // String!
     language?: NexusGenEnums['LanguageEnum'] | null; // LanguageEnum
     platform?: NexusGenEnums['PlatformEnum'] | null; // PlatformEnum
     projectId: string; // String!
+    userId: string; // String!
   }
   IdentityParameter: { // root type
     id: string; // String!
@@ -156,7 +163,10 @@ export interface NexusGenObjects {
   }
   Mutation: {};
   Parameter: { // root type
+    anotherEnvironmentParameterId?: string | null; // String
     boolean_value?: boolean | null; // Boolean
+    enabled: boolean; // Boolean!
+    environment: NexusGenEnums['EnvironmentEnum']; // EnvironmentEnum!
     id: string; // String!
     integer_value?: number | null; // Int
     json_value?: NexusGenScalars['JSONObject'] | null; // JSONObject
@@ -168,6 +178,7 @@ export interface NexusGenObjects {
   Project: { // root type
     id: string; // String!
     name: string; // String!
+    userId: string; // String!
   }
   Query: {};
   Rule: { // root type
@@ -199,6 +210,7 @@ export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars & NexusGenEnu
 
 export interface NexusGenFieldTypes {
   ApiKey: { // field return type
+    environment: NexusGenEnums['EnvironmentEnum']; // EnvironmentEnum!
     id: string; // String!
     name: string; // String!
     secret: string; // String!
@@ -228,6 +240,7 @@ export interface NexusGenFieldTypes {
   }
   Identity: { // field return type
     country: NexusGenEnums['CountryEnum'] | null; // CountryEnum
+    environment: NexusGenEnums['EnvironmentEnum']; // EnvironmentEnum!
     id: string; // String!
     identity: string; // String!
     language: NexusGenEnums['LanguageEnum'] | null; // LanguageEnum
@@ -235,6 +248,7 @@ export interface NexusGenFieldTypes {
     platform: NexusGenEnums['PlatformEnum'] | null; // PlatformEnum
     project: NexusGenRootTypes['Project'] | null; // Project
     projectId: string; // String!
+    userId: string; // String!
   }
   IdentityParameter: { // field return type
     id: string; // String!
@@ -248,7 +262,6 @@ export interface NexusGenFieldTypes {
     parameterId: string; // String!
   }
   Mutation: { // field return type
-    createApiKey: NexusGenRootTypes['ApiKey'] | null; // ApiKey
     createCondition: NexusGenRootTypes['Condition'] | null; // Condition
     createIdentity: NexusGenRootTypes['Identity'] | null; // Identity
     createParameter: NexusGenRootTypes['Parameter'] | null; // Parameter
@@ -266,8 +279,11 @@ export interface NexusGenFieldTypes {
     updateParameter: NexusGenRootTypes['Parameter'] | null; // Parameter
   }
   Parameter: { // field return type
+    anotherEnvironmentParameterId: string | null; // String
     boolean_value: boolean | null; // Boolean
     conditionValues: Array<NexusGenRootTypes['ConditionValue'] | null>; // [ConditionValue]!
+    enabled: boolean; // Boolean!
+    environment: NexusGenEnums['EnvironmentEnum']; // EnvironmentEnum!
     id: string; // String!
     integer_value: number | null; // Int
     json_value: NexusGenScalars['JSONObject'] | null; // JSONObject
@@ -277,9 +293,11 @@ export interface NexusGenFieldTypes {
     value_type: NexusGenEnums['ValueTypeEnum']; // ValueTypeEnum!
   }
   Project: { // field return type
+    apiKeys: Array<NexusGenRootTypes['ApiKey'] | null> | null; // [ApiKey]
     id: string; // String!
     name: string; // String!
     parameters: Array<NexusGenRootTypes['Parameter'] | null> | null; // [Parameter]
+    userId: string; // String!
   }
   Query: { // field return type
     apiKeys: Array<NexusGenRootTypes['ApiKey'] | null> | null; // [ApiKey]
@@ -312,6 +330,7 @@ export interface NexusGenFieldTypes {
 
 export interface NexusGenFieldTypeNames {
   ApiKey: { // field return type name
+    environment: 'EnvironmentEnum'
     id: 'String'
     name: 'String'
     secret: 'String'
@@ -341,6 +360,7 @@ export interface NexusGenFieldTypeNames {
   }
   Identity: { // field return type name
     country: 'CountryEnum'
+    environment: 'EnvironmentEnum'
     id: 'String'
     identity: 'String'
     language: 'LanguageEnum'
@@ -348,6 +368,7 @@ export interface NexusGenFieldTypeNames {
     platform: 'PlatformEnum'
     project: 'Project'
     projectId: 'String'
+    userId: 'String'
   }
   IdentityParameter: { // field return type name
     id: 'String'
@@ -361,7 +382,6 @@ export interface NexusGenFieldTypeNames {
     parameterId: 'String'
   }
   Mutation: { // field return type name
-    createApiKey: 'ApiKey'
     createCondition: 'Condition'
     createIdentity: 'Identity'
     createParameter: 'Parameter'
@@ -379,8 +399,11 @@ export interface NexusGenFieldTypeNames {
     updateParameter: 'Parameter'
   }
   Parameter: { // field return type name
+    anotherEnvironmentParameterId: 'String'
     boolean_value: 'Boolean'
     conditionValues: 'ConditionValue'
+    enabled: 'Boolean'
+    environment: 'EnvironmentEnum'
     id: 'String'
     integer_value: 'Int'
     json_value: 'JSONObject'
@@ -390,9 +413,11 @@ export interface NexusGenFieldTypeNames {
     value_type: 'ValueTypeEnum'
   }
   Project: { // field return type name
+    apiKeys: 'ApiKey'
     id: 'String'
     name: 'String'
     parameters: 'Parameter'
+    userId: 'String'
   }
   Query: { // field return type name
     apiKeys: 'ApiKey'
@@ -425,9 +450,6 @@ export interface NexusGenFieldTypeNames {
 
 export interface NexusGenArgTypes {
   Mutation: {
-    createApiKey: { // args
-      name: string; // String!
-    }
     createCondition: { // args
       data: NexusGenInputs['ConditionInputType']; // ConditionInputType!
       projectId: string; // String!

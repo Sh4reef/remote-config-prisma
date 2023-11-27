@@ -17,13 +17,6 @@ model User {
   hash  String
 }
 
-model ApiKey {
-  id     String @id @default(uuid())
-  userId String
-  name   String
-  secret String
-}
-
 model Project {
   id     String @id @default(uuid())
   name   String
@@ -32,14 +25,27 @@ model Project {
   conditions Condition[] @ignore
   parameters Parameter[] @ignore
   identities Identity[]  @ignore
+  apiKeys    ApiKey[]
+}
+
+model ApiKey {
+  id          String          @id @default(uuid())
+  userId      String
+  name        String
+  secret      String
+  environment EnvironmentEnum @default(development)
+
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectId String
 }
 
 model Identity {
-  id       String        @id @default(uuid())
-  identity String
-  platform PlatformEnum?
-  language LanguageEnum?
-  country  CountryEnum?
+  id          String          @id @default(uuid())
+  identity    String
+  platform    PlatformEnum?
+  language    LanguageEnum?
+  country     CountryEnum?
+  environment EnvironmentEnum @default(development)
 
   userId     String
   project    Project             @relation(fields: [projectId], references: [id], onDelete: Cascade)
@@ -63,19 +69,22 @@ model IdentityParameter {
 }
 
 model Parameter {
-  id            String        @id @default(uuid())
+  id            String          @id @default(uuid())
   parameter     String
   value_type    ValueTypeEnum
   string_value  String?
   integer_value Int?
   boolean_value Boolean?
   json_value    Json?
+  enabled       Boolean         @default(false)
+  environment   EnvironmentEnum @default(development)
 
-  userId          String
-  project         Project             @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  projectId       String
-  conditionValues ConditionValue[]
-  identities      IdentityParameter[]
+  userId                        String
+  project                       Project             @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectId                     String
+  conditionValues               ConditionValue[]
+  identities                    IdentityParameter[]
+  anotherEnvironmentParameterId String?
 }
 
 model Condition {
@@ -113,6 +122,11 @@ model ConditionValue {
   parameterId String
   condition   Condition @relation(fields: [conditionId], references: [id], onDelete: Cascade)
   conditionId String
+}
+
+enum EnvironmentEnum {
+  development
+  production
 }
 
 enum ValueTypeEnum {

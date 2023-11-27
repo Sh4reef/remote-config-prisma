@@ -1,5 +1,5 @@
 import { extendType, nonNull, stringArg } from "nexus";
-import { isRulesApplied } from "../helpers";
+import { getIdentityFormattedParameters } from "../helpers";
 
 const IdentityFormattedParametersQuery = extendType({
   type: "Query",
@@ -10,55 +10,8 @@ const IdentityFormattedParametersQuery = extendType({
         identityId: nonNull(stringArg()),
       },
       async resolve(_, args, ctx) {
-        const identityParameters = await ctx.prisma.identityParameter.findMany({
-          where: {
-            identity: { id: args.identityId },
-          },
-          include: {
-            parameter: {
-              include: {
-                conditionValues: {
-                  include: {
-                    condition: {
-                      include: {
-                        rules: true,
-                      },
-                    },
-                  },
-                },
-              },
-            },
-          },
-        });
-
-        const formattedIdentityParameters = identityParameters.reduce(
-          (prevIdentityParameters, identityParameter) => {
-            const parameter = identityParameter.parameter;
-            const valueType = parameter.value_type;
-            const conditionValues = parameter.conditionValues;
-            const isOverwritten = identityParameter.isOverwritten;
-            const overwrittenValue =
-              identityParameter[`overwritten_${valueType}_value`];
-            let value = parameter[`${valueType}_value`];
-
-            if (!isOverwritten) {
-              for (const conditionValue of conditionValues) {
-                const conditionalValue = conditionValue[`${valueType}_value`];
-
-                const rules = conditionValue.condition.rules;
-                const rulesApplied = isRulesApplied(rules);
-
-                value = rulesApplied ? conditionalValue : value;
-              }
-            }
-
-            return {
-              ...prevIdentityParameters,
-              [parameter.parameter]: isOverwritten ? overwrittenValue : value,
-            };
-          },
-          {}
-        );
+        const formattedIdentityParameters =
+          await getIdentityFormattedParameters(ctx.prisma, args.identityId);
 
         return {
           parameters: formattedIdentityParameters,

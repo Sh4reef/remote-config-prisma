@@ -18,7 +18,7 @@ const RevokeApiKeyMutation = extendType({
             id: args.apiKeyId,
           },
           data: {
-            secret: crypto.randomBytes(22).toString("base64url"),
+            secret: crypto.randomBytes(16).toString("base64url"),
           },
         });
       },

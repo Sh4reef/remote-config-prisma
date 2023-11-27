@@ -9,6 +9,8 @@ const CreateApiKeyMutation = extendType({
       type: "ApiKey",
       args: {
         name: nonNull(stringArg()),
+        projectId: nonNull(stringArg()),
+        environment: nonNull("EnvironmentEnum"),
       },
       async resolve(_, args, ctx) {
         const userId = getUserId(ctx);
@@ -16,7 +18,9 @@ const CreateApiKeyMutation = extendType({
           data: {
             userId,
             name: args.name,
-            secret: crypto.randomBytes(22).toString("base64url"),
+            secret: crypto.randomBytes(16).toString("base64url"),
+            projectId: args.projectId,
+            environment: args.environment,
           },
         });
       },

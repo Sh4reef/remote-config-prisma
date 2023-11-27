@@ -10,6 +10,7 @@ const IdentityInputType = inputObjectType({
     t.field("platform", { type: "PlatformEnum" });
     t.field("language", { type: "LanguageEnum" });
     t.field("country", { type: "CountryEnum" });
+    t.nonNull.field("environment", { type: "EnvironmentEnum" });
     t.list.field("parameters", { type: "IdentityParameterInputType" });
   },
 });

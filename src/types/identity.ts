@@ -7,8 +7,10 @@ const Identity = objectType({
   name: "Identity",
   definition(t) {
     t.nonNull.string("id");
+    t.nonNull.string("userId");
     t.nonNull.string("projectId");
     t.nonNull.string("identity");
+    t.nonNull.field("environment", { type: "EnvironmentEnum" });
     t.field("platform", { type: "PlatformEnum" });
     t.field("language", { type: "LanguageEnum" });
     t.field("country", { type: "CountryEnum" });

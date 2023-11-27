@@ -5,6 +5,7 @@ import permissions from "./permissions";
 import CreateParameterMutation from "./mutations/create-parameter";
 import {
   CountryEnum,
+  EnvironmentEnum,
   LanguageEnum,
   PlatformEnum,
   RuleEnum,
@@ -53,7 +54,6 @@ import DeleteIdentityMutation from "./mutations/delete-identity";
 import ApiKey from "./types/api-key";
 import APIKeysQuery from "./queries/api-keys";
 import RevokeApiKeyMutation from "./mutations/revoke-api-key";
-import CreateApiKeyMutation from "./mutations/create-api-key";
 import DeleteProjectMutation from "./mutations/delete-project";
 
 const schema = makeSchema({
@@ -85,7 +85,6 @@ const schema = makeSchema({
     // // mutations
     SignupMutation,
     LoginMutation,
-    CreateApiKeyMutation,
     CreateProjectMutation,
     CreateIdentityMutation,
     CreateParameterMutation,
@@ -113,6 +112,7 @@ const schema = makeSchema({
     IdentityParameterInputType,
 
     // // enum types
+    EnvironmentEnum,
     ValueTypeEnum,
     PlatformEnum,
     LanguageEnum,

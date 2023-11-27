@@ -5,6 +5,14 @@ import { enumType } from "nexus";
  */
 
 /**
+ * Environment enum
+ */
+export const EnvironmentEnum = enumType({
+  name: "EnvironmentEnum",
+  members: ["development", "production"],
+});
+
+/**
  * Rule enum
  */
 export const RuleEnum = enumType({

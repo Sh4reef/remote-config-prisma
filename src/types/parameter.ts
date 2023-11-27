@@ -14,6 +14,9 @@ const Parameter = objectType({
     t.boolean("boolean_value");
     t.jsonObject("json_value");
     t.nonNull.string("projectId");
+    t.nonNull.boolean("enabled");
+    t.nonNull.field("environment", { type: "EnvironmentEnum" });
+    t.string("anotherEnvironmentParameterId");
     t.nonNull.list.field("conditionValues", {
       type: "ConditionValue",
       async resolve(parent, __, ctx) {
