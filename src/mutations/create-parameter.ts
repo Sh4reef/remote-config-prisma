@@ -73,7 +73,7 @@ const CreateParameterMutation = extendType({
 
         for (const condition of args.data.conditions) {
           const createdCondition = await ctx.prisma.condition.upsert({
-            where: { id: condition.id as string | undefined },
+            where: { id: condition.id || "" },
             create: {
               userId,
               projectId: args.projectId,
@@ -83,7 +83,7 @@ const CreateParameterMutation = extendType({
               name: condition.name,
               rules: {
                 deleteMany: {
-                  conditionId: condition.id as string | undefined,
+                  conditionId: condition.id || "",
                 },
               },
             },
@@ -100,7 +100,7 @@ const CreateParameterMutation = extendType({
             };
             await ctx.prisma.rule.upsert({
               where: {
-                id: rule.id as string | undefined,
+                id: rule.id || "",
               },
               create: {
                 conditionId: createdCondition.id,

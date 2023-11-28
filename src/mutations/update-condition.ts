@@ -14,6 +14,11 @@ const UpdateConditionMutation = extendType({
           where: { id: args.conditionId },
           data: {
             name: args.data.name,
+            rules: {
+              deleteMany: {
+                conditionId: args.conditionId,
+              },
+            },
           },
         });
 
@@ -28,7 +33,7 @@ const UpdateConditionMutation = extendType({
           };
           await ctx.prisma.rule.upsert({
             where: {
-              id: rule.id as string | undefined,
+              id: rule.id || "",
             },
             create: {
               conditionId: updatedCondition.id,

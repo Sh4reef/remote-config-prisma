@@ -12,9 +12,11 @@ const DeleteParameterMutation = extendType({
         const deletedParameter = await ctx.prisma.parameter.delete({
           where: { id: args.parameterId },
         });
-        await ctx.prisma.parameter.delete({
-          where: { id: deletedParameter.anotherEnvironmentParameterId! },
-        });
+        if (deletedParameter.anotherEnvironmentParameterId) {
+          await ctx.prisma.parameter.delete({
+            where: { id: deletedParameter.anotherEnvironmentParameterId! },
+          });
+        }
         return deletedParameter;
       },
     });
