@@ -55,11 +55,23 @@ import ApiKey from "./types/api-key";
 import APIKeysQuery from "./queries/api-keys";
 import RevokeApiKeyMutation from "./mutations/revoke-api-key";
 import DeleteProjectMutation from "./mutations/delete-project";
+import VerifyUserMutation from "./mutations/verify-user";
+
+const IS_DEVELOPMENT = process.env.NODE_ENV === "development";
+
+const developmentTypes = () => {
+  let types = [];
+
+  if (IS_DEVELOPMENT) {
+    types.push(UsersQuery);
+  }
+
+  return types;
+};
 
 const schema = makeSchema({
   types: [
     // queries
-    UsersQuery,
     ProjectsQuery,
     IdentitiesQuery,
     ParametersQuery,
@@ -85,6 +97,7 @@ const schema = makeSchema({
     // // mutations
     SignupMutation,
     LoginMutation,
+    VerifyUserMutation,
     CreateProjectMutation,
     CreateIdentityMutation,
     CreateParameterMutation,
@@ -118,6 +131,9 @@ const schema = makeSchema({
     LanguageEnum,
     CountryEnum,
     RuleEnum,
+
+    // get types that visible only on development
+    ...developmentTypes(),
   ],
   shouldGenerateArtifacts: process.env.NODE_ENV === "development",
   outputs: {

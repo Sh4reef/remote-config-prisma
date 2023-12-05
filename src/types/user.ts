@@ -1,5 +1,7 @@
 import { objectType } from "nexus";
 
+const IS_DEVELOPMENT = process.env.NODE_ENV === "development";
+
 /**
  * ****** User type ******
  */
@@ -15,6 +17,12 @@ const User = objectType({
         return ctx.prisma.project.findMany({ where: { userId: parent.id } });
       },
     });
+
+    // fields that only visible on development
+    if (IS_DEVELOPMENT) {
+      t.boolean("verified");
+      t.string("verification_code");
+    }
   },
 });
 

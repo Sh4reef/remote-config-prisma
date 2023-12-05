@@ -11,10 +11,12 @@ datasource db {
 }
 
 model User {
-  id    String  @id @default(uuid())
-  name  String?
-  email String  @unique
-  hash  String
+  id                String   @id @default(uuid())
+  name              String?
+  email             String   @unique
+  hash              String
+  verified          Boolean? @default(false)
+  verification_code String?  @default(uuid())
 }
 
 model Project {

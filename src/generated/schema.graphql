@@ -136,6 +136,7 @@ type Mutation {
   updateCondition(conditionId: String!, data: ConditionInputType!): Condition
   updateIdentityParameter(data: IdentityParameterInputType!, identityParameterId: String!): IdentityParameter
   updateParameter(data: ParameterInputType!, parameterId: String!): Parameter
+  verifyUser(userId: String!, verificationCode: String!): User
 }
 
 type Parameter {
@@ -224,6 +225,8 @@ type User {
   id: String!
   name: String
   projects: [Project]
+  verification_code: String
+  verified: Boolean
 }
 
 enum ValueTypeEnum {

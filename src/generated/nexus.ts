@@ -195,6 +195,8 @@ export interface NexusGenObjects {
     email?: string | null; // String
     id: string; // String!
     name?: string | null; // String
+    verification_code?: string | null; // String
+    verified?: boolean | null; // Boolean
   }
 }
 
@@ -277,6 +279,7 @@ export interface NexusGenFieldTypes {
     updateCondition: NexusGenRootTypes['Condition'] | null; // Condition
     updateIdentityParameter: NexusGenRootTypes['IdentityParameter'] | null; // IdentityParameter
     updateParameter: NexusGenRootTypes['Parameter'] | null; // Parameter
+    verifyUser: NexusGenRootTypes['User'] | null; // User
   }
   Parameter: { // field return type
     anotherEnvironmentParameterId: string | null; // String
@@ -325,6 +328,8 @@ export interface NexusGenFieldTypes {
     id: string; // String!
     name: string | null; // String
     projects: Array<NexusGenRootTypes['Project'] | null> | null; // [Project]
+    verification_code: string | null; // String
+    verified: boolean | null; // Boolean
   }
 }
 
@@ -397,6 +402,7 @@ export interface NexusGenFieldTypeNames {
     updateCondition: 'Condition'
     updateIdentityParameter: 'IdentityParameter'
     updateParameter: 'Parameter'
+    verifyUser: 'User'
   }
   Parameter: { // field return type name
     anotherEnvironmentParameterId: 'String'
@@ -445,6 +451,8 @@ export interface NexusGenFieldTypeNames {
     id: 'String'
     name: 'String'
     projects: 'Project'
+    verification_code: 'String'
+    verified: 'Boolean'
   }
 }
 
@@ -503,6 +511,10 @@ export interface NexusGenArgTypes {
     updateParameter: { // args
       data: NexusGenInputs['ParameterInputType']; // ParameterInputType!
       parameterId: string; // String!
+    }
+    verifyUser: { // args
+      userId: string; // String!
+      verificationCode: string; // String!
     }
   }
   Query: {

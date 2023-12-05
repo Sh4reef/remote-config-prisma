@@ -15,6 +15,7 @@ const permissions = shield(
       createParameter: and(rules.isOwner, rules.isParameterUnique),
       login: allow,
       signup: allow,
+      verifyUser: allow,
     },
   },
   {
