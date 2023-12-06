@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development && ts-node-dev --no-notify --respawn --transpile-only src/server",
-    "start": "cross-env NODE_ENV=production && node build/server",
+    "dev": "cross-env NODE_ENV=development ts-node-dev --no-notify --respawn --transpile-only src/server",
+    "start": "cross-env NODE_ENV=production node build/server",
     "clean": "rm -rf build",
     "build": "npm -s run clean && npm -s run generate && tsc",
     "generate": "npm -s run generate:prisma && npm -s run generate:nexus",

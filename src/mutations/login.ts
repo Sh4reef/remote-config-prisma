@@ -1,6 +1,7 @@
 import { extendType, nonNull, stringArg } from "nexus";
 import { verify } from "argon2";
 import { sign } from "jsonwebtoken";
+import { JWT_ACCESS_SECRET } from "../variables";
 
 const LoginMutation = extendType({
   type: "Mutation",
@@ -24,7 +25,7 @@ const LoginMutation = extendType({
           throw new Error("Incorrect email or password.");
         }
 
-        const token = sign(user, process.env.JWT_ACCESS_SECRET as string, {
+        const token = sign(user, JWT_ACCESS_SECRET, {
           algorithm: "RS256",
           expiresIn: "8h",
         });

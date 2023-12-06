@@ -56,8 +56,7 @@ import APIKeysQuery from "./queries/api-keys";
 import RevokeApiKeyMutation from "./mutations/revoke-api-key";
 import DeleteProjectMutation from "./mutations/delete-project";
 import VerifyUserMutation from "./mutations/verify-user";
-
-const IS_DEVELOPMENT = process.env.NODE_ENV === "development";
+import { IS_DEVELOPMENT } from "./variables";
 
 const developmentTypes = () => {
   let types = [];
@@ -135,7 +134,7 @@ const schema = makeSchema({
     // get types that visible only on development
     ...developmentTypes(),
   ],
-  shouldGenerateArtifacts: process.env.NODE_ENV === "development",
+  shouldGenerateArtifacts: IS_DEVELOPMENT,
   outputs: {
     schema: path.join(__dirname, "generated", "schema.graphql"),
     typegen: path.join(__dirname, "generated", "nexus.ts"),

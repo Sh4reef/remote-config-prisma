@@ -1,6 +1,7 @@
 import { extendType, nonNull, stringArg } from "nexus";
 import { hash } from "argon2";
 import { sign } from "jsonwebtoken";
+import { JWT_ACCESS_SECRET } from "../variables";
 
 const SignupMutation = extendType({
   type: "Mutation",
@@ -21,7 +22,7 @@ const SignupMutation = extendType({
             hash: hashedPassword,
           },
         });
-        const token = sign(user, process.env.JWT_ACCESS_SECRET as string, {
+        const token = sign(user, JWT_ACCESS_SECRET, {
           algorithm: "RS256",
           expiresIn: "8h",
         });

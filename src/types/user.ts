@@ -1,6 +1,5 @@
 import { objectType } from "nexus";
-
-const IS_DEVELOPMENT = process.env.NODE_ENV === "development";
+import { IS_DEVELOPMENT } from "../variables";
 
 /**
  * ****** User type ******

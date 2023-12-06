@@ -1,13 +1,20 @@
 import { allow, and, shield } from "graphql-shield";
 import * as rules from "./rules";
+import { ShieldRule } from "graphql-shield/typings/types";
+import { IS_DEVELOPMENT } from "./variables";
+
+const Query: { [key: string]: ShieldRule } = {
+  "*": rules.isOwner,
+  projects: rules.isAuthenticated,
+};
+
+if (IS_DEVELOPMENT) {
+  Query["users"] = allow;
+}
 
 const permissions = shield(
   {
-    Query: {
-      "*": rules.isOwner,
-      projects: rules.isAuthenticated,
-      users: allow,
-    },
+    Query,
     Mutation: {
       "*": rules.isOwner,
       createProject: and(rules.isAuthenticated, rules.isProjectUnique),
