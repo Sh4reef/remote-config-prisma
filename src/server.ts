@@ -1,3 +1,4 @@
+import 'dotenv/config'
 import { ApolloServer } from "@apollo/server";
 import express from "express";
 import http from "http";
