@@ -67,8 +67,9 @@ export const isProjectUnique = rule()(async (_, args, ctx: Context) => {
 export const isIdentityUnique = rule()(async (_, args, ctx: Context) => {
   const userId = getUserId(ctx);
   const identityName = args["data"]["identity"];
+  const environment = args["data"]["environment"];
   const identity = await ctx.prisma.identity.findFirst({
-    where: { userId, identity: identityName },
+    where: { userId, identity: `${identityName}_${environment}` },
   });
   return !Boolean(identity) || new Error("You already have this identity");
 });

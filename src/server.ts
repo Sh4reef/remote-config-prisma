@@ -1,4 +1,4 @@
-import 'dotenv/config'
+import "dotenv/config";
 import { ApolloServer } from "@apollo/server";
 import express from "express";
 import http from "http";
@@ -8,7 +8,10 @@ import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHt
 import schema from "./schema";
 import createContext, { Context } from "./context";
 import { prisma } from "./client";
-import { getIdentityFormattedParameters } from "./helpers";
+import {
+  getFormattedParameters,
+  getIdentityFormattedParameters,
+} from "./helpers";
 
 const app = express();
 const httpServer = http.createServer(app);
@@ -42,29 +45,45 @@ const apolloServer = new ApolloServer<Context>({
         select: {
           userId: true,
           environment: true,
+          projectId: true,
         },
       });
       if (!apiKeyObj) {
         return res.status(403).json({ message: "Forbidden" });
       }
-      const identity = await prisma.identity.findFirst({
-        where: {
-          identity: query.identity as string,
-          userId: apiKeyObj.userId,
-          environment: apiKeyObj.environment,
-        },
-        select: {
-          id: true,
-        },
-      });
-      if (!identity) {
+
+      try {
+        if (!query.identity) {
+          const parameters = await getFormattedParameters(
+            prisma,
+            apiKeyObj.projectId
+          );
+          return res.json(parameters);
+        }
+
+        const identity = await prisma.identity.findUnique({
+          where: {
+            identity: `${query.identity}_${apiKeyObj.environment}` as string,
+            userId: apiKeyObj.userId,
+            environment: apiKeyObj.environment,
+          },
+          select: {
+            id: true,
+          },
+        });
+
+        if (!identity) {
+          return res.status(403).json({ message: "Forbidden" });
+        }
+
+        const parameters = await getIdentityFormattedParameters(
+          prisma,
+          identity.id
+        );
+        return res.json(parameters);
+      } catch (error) {
         return res.status(403).json({ message: "Forbidden" });
       }
-      const parameters = await getIdentityFormattedParameters(
-        prisma,
-        identity.id
-      );
-      return res.json(parameters);
     });
 
     await new Promise<void>((resolve) =>

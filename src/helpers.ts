@@ -18,6 +18,47 @@ export const isRulesApplied = (rules: Rule[]) => {
   });
 };
 
+export const getFormattedParameters = async (
+  prisma: PrismaClient,
+  projectId: string
+) => {
+  const parameters = await prisma.parameter.findMany({
+    where: { projectId: projectId },
+    include: {
+      conditionValues: {
+        include: {
+          condition: {
+            include: {
+              rules: true,
+            },
+          },
+        },
+      },
+    },
+  });
+
+  const formattedParameters = parameters.reduce((prevParameters, parameter) => {
+    const valueType = parameter["value_type"];
+    const conditionValues = parameter["conditionValues"];
+    let value = parameter[`${valueType}_value`];
+
+    conditionValues.forEach((conditionValue) => {
+      const conditionalValue = conditionValue[`${valueType}_value`];
+      const rules = conditionValue["condition"]["rules"];
+      const rulesApplied = isRulesApplied(rules);
+
+      value = rulesApplied ? conditionalValue : value;
+    });
+
+    return {
+      ...prevParameters,
+      [parameter.parameter]: value,
+    };
+  }, {});
+
+  return formattedParameters;
+};
+
 export const getIdentityFormattedParameters = async (
   prisma: PrismaClient,
   identityId: string

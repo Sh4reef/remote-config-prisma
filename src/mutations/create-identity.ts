@@ -21,7 +21,7 @@ const CreateIdentityMutation = extendType({
           data: {
             userId,
             projectId: args.projectId,
-            identity: args.data.identity,
+            identity: `${args.data.identity}_${args.data.environment}`,
             platform: args.data.platform,
             language: args.data.language,
             country: args.data.country,
