@@ -24,7 +24,6 @@ const SignupMutation = extendType({
         });
         const token = sign(user, JWT_ACCESS_SECRET, {
           algorithm: "RS256",
-          expiresIn: "8h",
         });
         return {
           token,

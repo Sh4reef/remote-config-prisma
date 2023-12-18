@@ -36,9 +36,8 @@ export const isOwnerOfCondition = rule()(async (_, args, ctx: Context) => {
 
 export const isOnwerOfIdentity = rule()(async (_, args, ctx: Context) => {
   const userId = getUserId(ctx);
-  const identityId = args["identityId"];
-  const identity = await ctx.prisma.identity.findUnique({
-    where: { id: identityId, userId },
+  const identity = await ctx.prisma.identity.findFirst({
+    where: { identity: args["identity"], userId },
   });
   return Boolean(identity) || new Error("Forbidden");
 });

@@ -8,6 +8,7 @@ const CreateParameterMutation = extendType({
       type: "Parameter",
       args: {
         projectId: nonNull(stringArg()),
+        environment: nonNull("EnvironmentEnum"),
         data: nonNull("ParameterInputType"),
       },
       async resolve(_, args, ctx) {
@@ -23,7 +24,7 @@ const CreateParameterMutation = extendType({
             boolean_value: args.data.boolean_value,
             json_value: args.data.json_value,
             enabled: args.data.enabled,
-            environment: args.data.environment,
+            environment: args.environment,
           },
         });
         const parameterOfAnotherEnv = await ctx.prisma.parameter.create({
@@ -38,7 +39,7 @@ const CreateParameterMutation = extendType({
             json_value: args.data.json_value,
             enabled: false,
             environment:
-              args.data.environment === "development"
+              args.environment === "development"
                 ? "production"
                 : "development",
           },

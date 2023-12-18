@@ -59,23 +59,18 @@ export interface NexusGenInputs {
     environment: NexusGenEnums['EnvironmentEnum']; // EnvironmentEnum!
     identity: string; // String!
     language?: NexusGenEnums['LanguageEnum'] | null; // LanguageEnum
-    parameters?: Array<NexusGenInputs['IdentityParameterInputType'] | null> | null; // [IdentityParameterInputType]
     platform?: NexusGenEnums['PlatformEnum'] | null; // PlatformEnum
   }
   IdentityParameterInputType: { // input type
-    identityId?: string | null; // String
-    isOverwritten?: boolean | null; // Boolean
     overwritten_boolean_value?: boolean | null; // Boolean
     overwritten_integer_value?: number | null; // Int
     overwritten_json_value?: NexusGenScalars['JSONObject'] | null; // JSONObject
     overwritten_string_value?: string | null; // String
-    parameter?: NexusGenInputs['ParameterInputType'] | null; // ParameterInputType
   }
   ParameterInputType: { // input type
     boolean_value?: boolean | null; // Boolean
     conditions: NexusGenInputs['ConditionInputType'][]; // [ConditionInputType!]!
     enabled: boolean; // Boolean!
-    environment: NexusGenEnums['EnvironmentEnum']; // EnvironmentEnum!
     integer_value?: number | null; // Int
     json_value?: NexusGenScalars['JSONObject'] | null; // JSONObject
     parameter: string; // String!
@@ -307,6 +302,7 @@ export interface NexusGenFieldTypes {
     conditions: Array<NexusGenRootTypes['Condition'] | null> | null; // [Condition]
     formattedParameters: NexusGenRootTypes['FormattedParameters'] | null; // FormattedParameters
     getIdentity: NexusGenRootTypes['Identity'] | null; // Identity
+    getParameter: NexusGenRootTypes['Parameter'] | null; // Parameter
     identities: Array<NexusGenRootTypes['Identity'] | null> | null; // [Identity]
     identityFormattedParameters: NexusGenRootTypes['FormattedParameters'] | null; // FormattedParameters
     parameters: Array<NexusGenRootTypes['Parameter'] | null> | null; // [Parameter]
@@ -430,6 +426,7 @@ export interface NexusGenFieldTypeNames {
     conditions: 'Condition'
     formattedParameters: 'FormattedParameters'
     getIdentity: 'Identity'
+    getParameter: 'Parameter'
     identities: 'Identity'
     identityFormattedParameters: 'FormattedParameters'
     parameters: 'Parameter'
@@ -468,6 +465,7 @@ export interface NexusGenArgTypes {
     }
     createParameter: { // args
       data: NexusGenInputs['ParameterInputType']; // ParameterInputType!
+      environment: NexusGenEnums['EnvironmentEnum']; // EnvironmentEnum!
       projectId: string; // String!
     }
     createProject: { // args
@@ -528,15 +526,20 @@ export interface NexusGenArgTypes {
       projectId: string; // String!
     }
     getIdentity: { // args
-      identityId: string; // String!
+      identity: string; // String!
+    }
+    getParameter: { // args
+      parameterId: string; // String!
     }
     identities: { // args
+      environment: NexusGenEnums['EnvironmentEnum']; // EnvironmentEnum!
       projectId: string; // String!
     }
     identityFormattedParameters: { // args
       identityId: string; // String!
     }
     parameters: { // args
+      environment: NexusGenEnums['EnvironmentEnum']; // EnvironmentEnum!
       projectId: string; // String!
     }
   }

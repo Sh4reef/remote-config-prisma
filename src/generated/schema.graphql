@@ -79,7 +79,6 @@ input IdentityInputType {
   environment: EnvironmentEnum!
   identity: String!
   language: LanguageEnum
-  parameters: [IdentityParameterInputType]
   platform: PlatformEnum
 }
 
@@ -96,13 +95,10 @@ type IdentityParameter {
 }
 
 input IdentityParameterInputType {
-  identityId: String
-  isOverwritten: Boolean
   overwritten_boolean_value: Boolean
   overwritten_integer_value: Int
   overwritten_json_value: JSONObject
   overwritten_string_value: String
-  parameter: ParameterInputType
 }
 
 """
@@ -123,7 +119,7 @@ enum LanguageEnum {
 type Mutation {
   createCondition(data: ConditionInputType!, projectId: String!): Condition
   createIdentity(data: IdentityInputType!, projectId: String!): Identity
-  createParameter(data: ParameterInputType!, projectId: String!): Parameter
+  createParameter(data: ParameterInputType!, environment: EnvironmentEnum!, projectId: String!): Parameter
   createProject(name: String!): Project
   deleteCondition(conditionId: String!): Condition
   deleteIdentity(identityId: String!): Identity
@@ -158,7 +154,6 @@ input ParameterInputType {
   boolean_value: Boolean
   conditions: [ConditionInputType!]! = []
   enabled: Boolean! = false
-  environment: EnvironmentEnum!
   integer_value: Int
   json_value: JSONObject
   parameter: String!
@@ -184,10 +179,11 @@ type Query {
   apiKeys(userId: String!): [ApiKey]
   conditions(projectId: String!): [Condition]
   formattedParameters(projectId: String!): FormattedParameters
-  getIdentity(identityId: String!): Identity
-  identities(projectId: String!): [Identity]
+  getIdentity(identity: String!): Identity
+  getParameter(parameterId: String!): Parameter
+  identities(environment: EnvironmentEnum!, projectId: String!): [Identity]
   identityFormattedParameters(identityId: String!): FormattedParameters
-  parameters(projectId: String!): [Parameter]
+  parameters(environment: EnvironmentEnum!, projectId: String!): [Parameter]
   projects: [Project]
   users: [User]
 }

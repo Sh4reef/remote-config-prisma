@@ -7,10 +7,12 @@ const ParametersQuery = extendType({
       type: "Parameter",
       args: {
         projectId: nonNull(stringArg()),
+        environment: nonNull("EnvironmentEnum"),
       },
       resolve(_, args, ctx) {
         return ctx.prisma.parameter.findMany({
-          where: { projectId: args.projectId },
+          where: { projectId: args.projectId, environment: args.environment },
+          orderBy: { createdAt: "desc" },
         });
       },
     });

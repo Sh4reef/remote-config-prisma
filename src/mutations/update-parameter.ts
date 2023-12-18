@@ -16,6 +16,7 @@ const UpdateParameterMutation = extendType({
           where: { id: args.parameterId },
           data: {
             parameter: args.data.parameter,
+            enabled: args.data.enabled,
             value_type: args.data.value_type,
             string_value: args.data.string_value,
             integer_value: args.data.integer_value,

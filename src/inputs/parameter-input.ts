@@ -13,7 +13,6 @@ const ParameterInputType = inputObjectType({
     t.boolean("boolean_value");
     t.jsonObject("json_value");
     t.nonNull.boolean("enabled", { default: false });
-    t.nonNull.field("environment", { type: "EnvironmentEnum" });
     t.nonNull.list.nonNull.field("conditions", {
       type: "ConditionInputType",
       default: [],

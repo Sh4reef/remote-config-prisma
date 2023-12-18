@@ -6,11 +6,11 @@ const IdentityQuery = extendType({
     t.field("getIdentity", {
       type: "Identity",
       args: {
-        identityId: nonNull(stringArg()),
+        identity: nonNull(stringArg()),
       },
       async resolve(_, args, ctx) {
-        return await ctx.prisma.identity.findUniqueOrThrow({
-          where: { id: args.identityId },
+        return await ctx.prisma.identity.findFirst({
+          where: { identity: args.identity },
         });
       },
     });

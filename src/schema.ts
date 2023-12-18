@@ -57,6 +57,7 @@ import RevokeApiKeyMutation from "./mutations/revoke-api-key";
 import DeleteProjectMutation from "./mutations/delete-project";
 import VerifyUserMutation from "./mutations/verify-user";
 import { IS_DEVELOPMENT } from "./variables";
+import ParameterQuery from "./queries/parameter";
 
 const developmentTypes = () => {
   let types = [];
@@ -74,6 +75,7 @@ const schema = makeSchema({
     ProjectsQuery,
     IdentitiesQuery,
     ParametersQuery,
+    ParameterQuery,
     ConditionsQuery,
     FormattedParametersQuery,
     IdentityQuery,

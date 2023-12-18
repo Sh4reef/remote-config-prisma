@@ -17,12 +17,17 @@ model User {
   hash              String
   verified          Boolean? @default(false)
   verification_code String?  @default(uuid())
+
+  createdAt DateTime @default(now())
 }
 
 model Project {
   id     String @id @default(uuid())
   name   String
   userId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 
   conditions Condition[] @ignore
   parameters Parameter[] @ignore
@@ -37,6 +42,9 @@ model ApiKey {
   secret      String
   environment EnvironmentEnum @default(development)
 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
   project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
   projectId String
 }
@@ -48,6 +56,9 @@ model Identity {
   language    LanguageEnum?
   country     CountryEnum?
   environment EnvironmentEnum @default(development)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 
   userId     String
   project    Project             @relation(fields: [projectId], references: [id], onDelete: Cascade)
@@ -62,6 +73,9 @@ model IdentityParameter {
   overwritten_integer_value Int?
   overwritten_boolean_value Boolean?
   overwritten_json_value    Json?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 
   userId      String
   identity    Identity  @relation(fields: [identityId], references: [id], onDelete: Cascade)
@@ -81,6 +95,9 @@ model Parameter {
   enabled       Boolean         @default(false)
   environment   EnvironmentEnum @default(development)
 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
   userId                        String
   project                       Project             @relation(fields: [projectId], references: [id], onDelete: Cascade)
   projectId                     String
@@ -93,6 +110,9 @@ model Condition {
   id   String @id @default(uuid())
   name String
 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
   userId          String
   project         Project          @relation(fields: [projectId], references: [id], onDelete: Cascade)
   projectId       String
@@ -103,7 +123,7 @@ model Condition {
 model Rule {
   id              String        @id @default(uuid())
   rule            RuleEnum
-  datetime        String?
+  datetime        DateTime?
   platform        PlatformEnum?
   language        LanguageEnum?
   country         CountryEnum?
