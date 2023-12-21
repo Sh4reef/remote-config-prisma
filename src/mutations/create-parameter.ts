@@ -39,9 +39,7 @@ const CreateParameterMutation = extendType({
             json_value: args.data.json_value,
             enabled: false,
             environment:
-              args.environment === "development"
-                ? "production"
-                : "development",
+              args.environment === "development" ? "production" : "development",
           },
         });
 
@@ -78,7 +76,31 @@ const CreateParameterMutation = extendType({
             create: {
               userId,
               projectId: args.projectId,
+              environment: args.environment,
               name: condition.name,
+            },
+            update: {
+              name: condition.name,
+              rules: {
+                deleteMany: {
+                  conditionId: condition.id || "",
+                },
+              },
+            },
+          });
+
+          // upsert the other environment condition
+          const conditionOfAnotherEnv = await ctx.prisma.condition.upsert({
+            where: { id: createdCondition.anotherEnvironmentConditionId || "" },
+            create: {
+              userId,
+              name: condition.name,
+              projectId: args.projectId,
+              environment:
+                args.environment === "development"
+                  ? "production"
+                  : "development",
+              anotherEnvironmentConditionId: createdCondition.id,
             },
             update: {
               name: condition.name,
@@ -99,7 +121,7 @@ const CreateParameterMutation = extendType({
               country: rule.country,
               before_datetime: rule.before_datetime,
             };
-            await ctx.prisma.rule.upsert({
+            const createdRule = await ctx.prisma.rule.upsert({
               where: {
                 id: rule.id || "",
               },
@@ -108,6 +130,32 @@ const CreateParameterMutation = extendType({
                 ...ruleValues,
               },
               update: ruleValues,
+            });
+
+            const ruleOfAnotherEnv = await ctx.prisma.rule.upsert({
+              where: {
+                id: createdRule.anotherEnvironmentRuleId || "",
+              },
+              create: {
+                conditionId: conditionOfAnotherEnv.id,
+                anotherEnvironmentRuleId: createdRule.id,
+                ...ruleValues,
+              },
+              update: ruleValues,
+            });
+
+            await ctx.prisma.rule.update({
+              where: { id: createdRule.id },
+              data: {
+                anotherEnvironmentRuleId: ruleOfAnotherEnv.id,
+              },
+            });
+
+            await ctx.prisma.rule.update({
+              where: { id: ruleOfAnotherEnv.id },
+              data: {
+                anotherEnvironmentRuleId: createdRule.id,
+              },
             });
           }
 
@@ -122,7 +170,7 @@ const CreateParameterMutation = extendType({
                 json_value: condition.json_value,
               },
               {
-                conditionId: createdCondition.id,
+                conditionId: conditionOfAnotherEnv.id,
                 parameterId: parameterOfAnotherEnv.id,
                 string_value: condition.string_value,
                 integer_value: condition.integer_value,
@@ -130,6 +178,16 @@ const CreateParameterMutation = extendType({
                 json_value: condition.json_value,
               },
             ],
+          });
+
+          await ctx.prisma.condition.update({
+            where: { id: createdCondition.id },
+            data: { anotherEnvironmentConditionId: conditionOfAnotherEnv.id },
+          });
+
+          await ctx.prisma.condition.update({
+            where: { id: conditionOfAnotherEnv.id },
+            data: { anotherEnvironmentConditionId: createdCondition.id },
           });
         }
 

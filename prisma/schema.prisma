@@ -107,17 +107,19 @@ model Parameter {
 }
 
 model Condition {
-  id   String @id @default(uuid())
-  name String
+  id          String          @id @default(uuid())
+  name        String
+  environment EnvironmentEnum @default(development)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
 
-  userId          String
-  project         Project          @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  projectId       String
-  conditionValues ConditionValue[]
-  rules           Rule[]
+  userId                        String
+  project                       Project          @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectId                     String
+  conditionValues               ConditionValue[]
+  rules                         Rule[]
+  anotherEnvironmentConditionId String?
 }
 
 model Rule {
@@ -131,6 +133,7 @@ model Rule {
 
   condition   Condition @relation(fields: [conditionId], references: [id], onDelete: Cascade)
   conditionId String
+  anotherEnvironmentRuleId String?
 }
 
 model ConditionValue {

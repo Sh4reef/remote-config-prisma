@@ -9,6 +9,8 @@ const Condition = objectType({
     t.nonNull.string("id");
     t.nonNull.string("name");
     t.nonNull.string("projectId");
+    t.nonNull.field("environment", { type: "EnvironmentEnum" });
+    t.string("anotherEnvironmentConditionId");
     t.nonNull.list.field("rules", {
       type: "Rule",
       async resolve(parent, __, ctx) {

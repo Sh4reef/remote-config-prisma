@@ -7,10 +7,11 @@ const ConditionsQuery = extendType({
       type: "Condition",
       args: {
         projectId: nonNull(stringArg()),
+        environment: nonNull("EnvironmentEnum"),
       },
       resolve(_, args, ctx) {
         return ctx.prisma.condition.findMany({
-          where: { projectId: args.projectId },
+          where: { projectId: args.projectId, environment: args.environment },
         });
       },
     });

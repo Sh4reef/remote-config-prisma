@@ -120,6 +120,8 @@ export interface NexusGenObjects {
     user?: NexusGenRootTypes['User'] | null; // User
   }
   Condition: { // root type
+    anotherEnvironmentConditionId?: string | null; // String
+    environment: NexusGenEnums['EnvironmentEnum']; // EnvironmentEnum!
     id: string; // String!
     name: string; // String!
     projectId: string; // String!
@@ -217,6 +219,8 @@ export interface NexusGenFieldTypes {
     user: NexusGenRootTypes['User'] | null; // User
   }
   Condition: { // field return type
+    anotherEnvironmentConditionId: string | null; // String
+    environment: NexusGenEnums['EnvironmentEnum']; // EnvironmentEnum!
     id: string; // String!
     name: string; // String!
     projectId: string; // String!
@@ -341,6 +345,8 @@ export interface NexusGenFieldTypeNames {
     user: 'User'
   }
   Condition: { // field return type name
+    anotherEnvironmentConditionId: 'String'
+    environment: 'EnvironmentEnum'
     id: 'String'
     name: 'String'
     projectId: 'String'
@@ -520,6 +526,7 @@ export interface NexusGenArgTypes {
       userId: string; // String!
     }
     conditions: { // args
+      environment: NexusGenEnums['EnvironmentEnum']; // EnvironmentEnum!
       projectId: string; // String!
     }
     formattedParameters: { // args

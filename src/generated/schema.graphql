@@ -15,6 +15,8 @@ type AuthPayload {
 }
 
 type Condition {
+  anotherEnvironmentConditionId: String
+  environment: EnvironmentEnum!
   id: String!
   name: String!
   projectId: String!
@@ -177,7 +179,7 @@ type Project {
 
 type Query {
   apiKeys(userId: String!): [ApiKey]
-  conditions(projectId: String!): [Condition]
+  conditions(environment: EnvironmentEnum!, projectId: String!): [Condition]
   formattedParameters(projectId: String!): FormattedParameters
   getIdentity(identity: String!): Identity
   getParameter(parameterId: String!): Parameter
